@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a59f07c4-c277-4573-abd2-8ea79995e338" name="Changes" comment="The customer, dependent and policyholder class alongside an interface for the Unique ID generator">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Test3.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+    <list default="true" id="a59f07c4-c277-4573-abd2-8ea79995e338" name="Changes" comment="The Claim and ClaimManager class">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +67,7 @@
       <option name="presentableId" value="Default" />
       <updated>1711878950107</updated>
       <workItem from="1711878952130" duration="3986000" />
-      <workItem from="1711992167462" duration="4021000" />
+      <workItem from="1711992167462" duration="5453000" />
     </task>
     <task id="LOCAL-00001" summary="The customer, dependent and policyholder class alongside an interface for the Unique ID generator">
       <option name="closed" value="true" />
@@ -83,7 +77,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711993476257</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="The Claim and ClaimManager class">
+      <option name="closed" value="true" />
+      <created>1711999015176</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1711999015176</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -91,7 +93,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="The customer, dependent and policyholder class alongside an interface for the Unique ID generator" />
-    <option name="LAST_COMMIT_MESSAGE" value="The customer, dependent and policyholder class alongside an interface for the Unique ID generator" />
+    <MESSAGE value="The Claim and ClaimManager class" />
+    <option name="LAST_COMMIT_MESSAGE" value="The Claim and ClaimManager class" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
