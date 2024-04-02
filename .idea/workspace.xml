@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a59f07c4-c277-4573-abd2-8ea79995e338" name="Changes" comment="The Insurance Card class">
+    <list default="true" id="a59f07c4-c277-4573-abd2-8ea79995e338" name="Changes" comment="The BankingInfo class and CLaimProcessManager Interface">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/Claim.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Claim.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/ClaimManager.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Customer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Dependent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Dependent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/InsuranceCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/InsuranceCard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/PolicyHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/PolicyHolder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +73,8 @@
       <option name="presentableId" value="Default" />
       <updated>1711878950107</updated>
       <workItem from="1711878952130" duration="3986000" />
-      <workItem from="1711992167462" duration="9295000" />
+      <workItem from="1711992167462" duration="9351000" />
+      <workItem from="1712027958811" duration="5703000" />
     </task>
     <task id="LOCAL-00001" summary="The customer, dependent and policyholder class alongside an interface for the Unique ID generator">
       <option name="closed" value="true" />
@@ -96,7 +100,23 @@
       <option name="project" value="LOCAL" />
       <updated>1712004570360</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Update on the Customer, Dependent and PolicyHolder classes">
+      <option name="closed" value="true" />
+      <created>1712009399735</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1712009399735</updated>
+    </task>
+    <task id="LOCAL-00005" summary="The BankingInfo class and CLaimProcessManager Interface">
+      <option name="closed" value="true" />
+      <created>1712034057558</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1712034057558</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -106,7 +126,9 @@
     <MESSAGE value="The customer, dependent and policyholder class alongside an interface for the Unique ID generator" />
     <MESSAGE value="The Claim and ClaimManager class" />
     <MESSAGE value="The Insurance Card class" />
-    <option name="LAST_COMMIT_MESSAGE" value="The Insurance Card class" />
+    <MESSAGE value="Update on the Customer, Dependent and PolicyHolder classes" />
+    <MESSAGE value="The BankingInfo class and CLaimProcessManager Interface" />
+    <option name="LAST_COMMIT_MESSAGE" value="The BankingInfo class and CLaimProcessManager Interface" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -118,7 +140,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Classes/Claim.java</url>
-          <line>114</line>
+          <line>132</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

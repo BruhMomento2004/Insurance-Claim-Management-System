@@ -1,5 +1,9 @@
 package Classes;
 
+/**
+ * @author <Nguyen Thanh Tung - s3979489>
+ */
+
 import Interface.generateID;
 
 import java.util.ArrayList;

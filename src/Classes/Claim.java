@@ -1,13 +1,18 @@
 package Classes;
 
+/**
+ * @author <Nguyen Thanh Tung - s3979489> 
+ */
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 import Enum.Status;
 import Interface.ClaimProcessManager;
+import Interface.generateID;
 
-public class Claim implements ClaimProcessManager {
+public class Claim implements ClaimProcessManager, generateID {
     private String ID;
     private Date ClaimDate;
     private String InsuredPerson;
@@ -18,6 +23,7 @@ public class Claim implements ClaimProcessManager {
     private Status status;
     private String BankingInfo;
     private static List<Claim> claims = new ArrayList<>();
+    private static Random random = new Random();
 
 
     public Claim() {
@@ -105,6 +111,22 @@ public class Claim implements ClaimProcessManager {
     public void setBankingInfo(String bankingInfo) {
         BankingInfo = bankingInfo;
     }
+    public static void addClaim(Claim newClaim) {
+        claims.add(newClaim);
+    }
+    public long nextLong(Random rng, long n) {
+        long bits, val;
+        do {
+            bits = (rng.nextLong() << 1) >>> 1;
+            val = bits % n;
+        } while (bits-val+(n-1) < 0L);
+        return val;
+    }
+    @Override
+    public String IDGenerator() {
+        long number = nextLong(random, 9_000_000_000L) + 1_000_000_000L;
+        return "f-" + number;
+    }
     @Override
     public void addClaim(Scanner scanner) {
         System.out.println("Enter ID:");
@@ -151,7 +173,7 @@ public class Claim implements ClaimProcessManager {
 
         // Add the new claim to the list of claims
         // Assuming there's a static method in the Claim class to add a claim
-        ClaimManager.addClaim(newClaim);
+        Claim.addClaim(newClaim);
 
         System.out.println("Claim added successfully with ID: " + ID);
     }
@@ -272,18 +294,22 @@ public class Claim implements ClaimProcessManager {
 
         // Iterate over the list of claims
         for (Claim claim : claims) {
-            // Print the details of each claim
-            System.out.println("Claim ID: " + claim.getID());
-            System.out.println("Claim Date: " + claim.getClaimDate());
-            System.out.println("Insured Person: " + claim.getInsuredPerson());
-            System.out.println("Card Number: " + claim.getCardNumber());
-            System.out.println("Exam Date: " + claim.getExamDate());
-            System.out.println("Documents: " + claim.getDocuments());
-            System.out.println("Claim Amount: " + claim.getClaimAmount());
-            System.out.println("Status: " + claim.getStatus());
-            System.out.println("Banking Info: " + claim.getBankingInfo());
-            System.out.println("------------------------");
+            System.out.println(claim.toString());
         }
     }
 
+    @Override
+    public String toString() {
+        return  '{' +
+                "ID=" + ID + '\'' +
+                ", ClaimDate=" + ClaimDate +
+                ", InsuredPerson=" + InsuredPerson + '\'' +
+                ", CardNumber=" + CardNumber +
+                ", ExamDate=" + ExamDate +
+                ", Documents=" + Documents +
+                ", ClaimAmount=" + ClaimAmount +
+                ", status=" + status +
+                ", BankingInfo=" + BankingInfo + '\'' +
+                '}';
+    }
 }

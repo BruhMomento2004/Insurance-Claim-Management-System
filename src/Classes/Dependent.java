@@ -1,11 +1,17 @@
 package Classes;
 
+/**
+ * @author <Nguyen Thanh Tung - s3979489>
+ */
+
 import Interface.generateID;
 
 import java.util.*;
 
 public class Dependent extends Customer implements generateID {
     private String PolicyHolderId;
+    private static List<Dependent> dependents = new ArrayList<>();
+    private static Random random = new Random();
     public Dependent() {
     }
     public Dependent(String id, String fullName, int insuranceCard, List<String> claims, String policyHolderId) {
@@ -19,7 +25,18 @@ public class Dependent extends Customer implements generateID {
     public void setPolicyHolderId(String policyHolderId) {
         this.PolicyHolderId = policyHolderId;
     }
+    public static List<Dependent> getDependents() {
+        return dependents;
+    }
+    public static void addDependent(Dependent newDependent){
+        dependents.add(newDependent);
+    }
 
+    @Override
+    public String IDGenerator() {
+        int number = random.nextInt(9_000_000) + 1_000_000;
+        return "c-" + number;
+    }
     @Override
     public void createCustomer(Scanner scanner) {
         System.out.println("Enter Full Name:");
@@ -39,7 +56,7 @@ public class Dependent extends Customer implements generateID {
         Dependent newDependent = new Dependent(id, fullName, insuranceCard, new ArrayList<>(), policyHolderId);
 
         // Add the new dependent to the list of dependents
-        super.addDependent(newDependent);
+        Dependent.addDependent(newDependent);
 
         System.out.println("Dependent created successfully with ID: " + id);
     }
@@ -49,54 +66,57 @@ public class Dependent extends Customer implements generateID {
         String id = scanner.nextLine();
 
         // Search for the customer in the list of dependents
-        for (Dependent dependent : getDependents()) {
+        for (Dependent dependent : dependents) {
             if (dependent.getId().equals(id)) {
-                updateCustomerDetails(scanner, dependent);
+                System.out.println("Enter new Full Name:");
+                String fullName = scanner.nextLine();
+
+                System.out.println("Enter new Insurance Card number:");
+                int insuranceCard = scanner.nextInt();
+                scanner.nextLine(); // consume newline left-over
+
+                System.out.println("Enter new Claims (comma separated):");
+                String claimsStr = scanner.nextLine();
+                List<String> claims = Arrays.asList(claimsStr.split(","));
+
+                // Update the customer details
+                dependent.setFullName(fullName);
+                dependent.setInsuranceCard(insuranceCard);
+                dependent.setClaims(claims);
+
+                System.out.println("Customer updated successfully.");
                 return;
             }
         }
 
         System.out.println("Customer with ID: " + id + " not found.");
-    }
-
-    private void updateCustomerDetails(Scanner scanner, Customer customer) {
-        System.out.println("Enter new Full Name:");
-        String fullName = scanner.nextLine();
-
-        System.out.println("Enter new Insurance Card number:");
-        int insuranceCard = scanner.nextInt();
-        scanner.nextLine(); // consume newline left-over
-
-        System.out.println("Enter new Claims (comma separated):");
-        String claimsStr = scanner.nextLine();
-        List<String> claims = Arrays.asList(claimsStr.split(","));
-
-        // Update the customer details
-        customer.setFullName(fullName);
-        customer.setInsuranceCard(insuranceCard);
-        customer.setClaims(claims);
-
-        System.out.println("Customer updated successfully.");
     }
     @Override
     public void readCustomer(Scanner scanner) {
-        System.out.println("Enter the ID of the customer you want to read:");
+        System.out.println("Enter the ID of the dependent you want to read:");
         String id = scanner.nextLine();
 
         // Search for the customer in the list of dependents
-        for (Dependent dependent : getDependents()) {
+        for (Dependent dependent : dependents) {
             if (dependent.getId().equals(id)) {
-                printCustomerDetails(dependent);
+                // Print the customer details
+                System.out.println("Full Name: " + dependent.getFullName());
+                System.out.println("Insurance Card number: " + dependent.getInsuranceCard());
+                System.out.println("Claims: " + dependent.getClaims());
+                System.out.println("Policy Holder's ID: " + dependent.getPolicyHolderId());
                 return;
             }
         }
 
         System.out.println("Customer with ID: " + id + " not found.");
     }
-
-    private void printCustomerDetails(Customer customer) {
-        System.out.println("Full Name: " + customer.getFullName());
-        System.out.println("Insurance Card number: " + customer.getInsuranceCard());
-        System.out.println("Claims: " + customer.getClaims());
+    @Override
+    public String toString() {
+        return '{' + "id=" + getId() + '\'' +
+                ", FullName=" + getFullName() + '\'' +
+                ", InsuranceCard=" + getInsuranceCard() +
+                ", Claims=" + getClaims() +
+                "PolicyHolderId=" + PolicyHolderId + '\'' +
+                '}';
     }
 }

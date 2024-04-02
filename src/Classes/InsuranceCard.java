@@ -1,17 +1,21 @@
 package Classes;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+/**
+ * @author <Nguyen Thanh Tung - s3979489>
+ */
+
+import Interface.generateID;
+
+import java.util.*;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
 
-public class InsuranceCard {
+public class InsuranceCard implements generateID {
     private int ID;
     private String CardHolder;
     private String PolicyOwner;
     private Date ExpiryDate;
+    private static Random random = new Random();
     public InsuranceCard() {
     }
     public InsuranceCard(int ID, String cardHolder, String policyOwner, Date expiryDate) {
@@ -68,6 +72,19 @@ public class InsuranceCard {
             System.out.println("Expiry Date: " + card.getExpiryDate());
             System.out.println("------------------------");
         }
+    }
+    public long nextLong(Random rng, long n) {
+        long bits, val;
+        do {
+            bits = (rng.nextLong() << 1) >>> 1;
+            val = bits % n;
+        } while (bits-val+(n-1) < 0L);
+        return val;
+    }
+    @Override
+    public String IDGenerator() {
+        long number = nextLong(random, 9_000_000_000L) + 1_000_000_000L;
+        return String.valueOf(number);
     }
 
     public static void createCard(Scanner scanner) {
@@ -149,5 +166,15 @@ public class InsuranceCard {
         }
 
         System.out.println("Card with ID: " + id + " not found.");
+    }
+
+    @Override
+    public String toString() {
+        return  '{' +
+                "ID=" + ID +
+                ", CardHolder=" + CardHolder + '\'' +
+                ", PolicyOwner=" + PolicyOwner + '\'' +
+                ", ExpiryDate=" + ExpiryDate +
+                '}';
     }
 }
