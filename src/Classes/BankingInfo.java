@@ -68,9 +68,9 @@ public class BankingInfo implements generateID {
         String id = bankid.IDGenerator();
         BankingInfo newBank = new BankingInfo(id, bankName, accountNumber);
 
-        // You might want to add this new object to a list of BankingInfo objects for further use.
-        // For example:
-        // bankingInfoList.add(newBank);
+        // Save the new BankingInfo object to a file
+        LoadSaveData loadSaveData = new LoadSaveData();
+        loadSaveData.saveBankingInfo(newBank, "bankingInfo.txt");
 
         System.out.println("Banking information created successfully.");
     }
@@ -79,7 +79,6 @@ public class BankingInfo implements generateID {
         String id = scanner.nextLine();
 
         // Find the bank in the list of banks
-        // Assuming you have a list of banks named 'banks'
         for (BankingInfo bank : banks) {
             if (bank.getID().equals(id)) {
                 // If the bank is found, ask for new details and update the bank
@@ -93,6 +92,10 @@ public class BankingInfo implements generateID {
                 bank.setBankName(bankName);
                 bank.setAccountNumber(accountNumber);
 
+                // Save the updated bank info
+                LoadSaveData loadSaveData = new LoadSaveData();
+                loadSaveData.saveBankingInfo(bank, "bankingInfo.txt");
+
                 System.out.println("Bank updated successfully with ID: " + id);
                 return;
             }
@@ -104,6 +107,10 @@ public class BankingInfo implements generateID {
     public static void readBank(Scanner scanner) {
         System.out.println("Enter the ID of the bank you want to read:");
         String id = scanner.nextLine();
+
+        // Load the bank information from a file
+        LoadSaveData loadSaveData = new LoadSaveData();
+        List<BankingInfo> banks = loadSaveData.loadBankingInfo("bankingInfo.txt");
 
         // Search for the bank in the list of banks
         for (BankingInfo bank : banks) {

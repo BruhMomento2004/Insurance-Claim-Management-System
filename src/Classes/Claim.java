@@ -182,8 +182,35 @@ public class Claim implements ClaimProcessManager, generateID {
         System.out.println("Enter Status (APPROVED, REJECTED, PENDING):");
         Status status = Status.valueOf(scanner.nextLine().toUpperCase());
 
-        System.out.println("Enter Banking Info:");
-        String bankingInfo = scanner.nextLine();
+        String bankId;
+        while (true) {
+            System.out.println("Enter the Bank ID (format b- followed by 7 digits):");
+            bankId = scanner.nextLine();
+
+            if (bankId.matches("b-\\d{7}")) {
+                break;
+            } else {
+                System.out.println("Invalid Bank ID. It should be in the format b- followed by 7 digits.");
+            }
+        }
+        System.out.println("Enter the Bank Name:");
+        String bankName = scanner.nextLine();
+
+        System.out.println("Enter the Account Number:");
+        double accountNumber = scanner.nextDouble();
+        scanner.nextLine(); // consume newline left-over
+
+        // Create a new BankingInfo object
+        BankingInfo bankid = new BankingInfo();
+        String id = bankid.IDGenerator();
+        BankingInfo newBank = new BankingInfo(id, bankName, accountNumber);
+
+        // Save the BankingInfo object to a file
+        LoadSaveData dataHandler = new LoadSaveData();
+        dataHandler.saveBankingInfo(newBank, "BankingInfo.txt");
+
+        // Convert the BankingInfo object to a string
+        String bankingInfo = newBank.toString();
 
         // Create a new Claim object
         Claim newClaim = new Claim(ID, claimDate, insuredPerson, Math.toIntExact(cardNumber), examDate, documents, claimAmount, status, bankingInfo);
@@ -235,21 +262,19 @@ public class Claim implements ClaimProcessManager, generateID {
                 System.out.println("Enter new Status (APPROVED, REJECTED, PENDING):");
                 Status status = Status.valueOf(scanner.nextLine().toUpperCase());
 
-                String bankId;
-                while (true) {
-                    System.out.println("Enter the Bank ID (format b- followed by 7 digits):");
-                    bankId = scanner.nextLine();
+                System.out.println("Enter the new Bank ID (format b- followed by 7 digits):");
+                String newBankId = scanner.nextLine();
 
-                    if (bankId.matches("b-\\d{7}")) {
-                        break;
-                    } else {
-                        System.out.println("Invalid Bank ID. It should be in the format b- followed by 7 digits.");
-                    }
+                // Validate the new bank ID
+                while (!newBankId.matches("b-\\d{7}")) {
+                    System.out.println("Invalid Bank ID. It should be in the format b- followed by 7 digits.");
+                    newBankId = scanner.nextLine();
                 }
-                System.out.println("Enter the Bank Name:");
+
+                System.out.println("Enter the new Bank Name:");
                 String bankName = scanner.nextLine();
 
-                System.out.println("Enter the Account Number:");
+                System.out.println("Enter the new Account Number:");
                 double accountNumber = scanner.nextDouble();
                 scanner.nextLine(); // consume newline left-over
 
@@ -258,10 +283,16 @@ public class Claim implements ClaimProcessManager, generateID {
                 String id = bankid.IDGenerator();
                 BankingInfo newBank = new BankingInfo(id, bankName, accountNumber);
 
+                // Set the new bank ID
+                newBank.setID(newBankId);
+
                 // Convert the BankingInfo object to a string
                 String bankingInfo = newBank.toString();
 
                 // Update the claim with the new details
+                LoadSaveData dataHandler = new LoadSaveData();
+                dataHandler.saveBankingInfo(newBank, "BankingInfo.txt");
+
                 claim.setClaimDate(claimDate);
                 claim.setInsuredPerson(insuredPerson);
                 claim.setCardNumber(cardNumber);
@@ -270,7 +301,6 @@ public class Claim implements ClaimProcessManager, generateID {
                 claim.setClaimAmount(claimAmount);
                 claim.setStatus(status);
                 claim.setBankingInfo(bankingInfo);
-
                 System.out.println("Claim updated successfully with ID: " + ID);
                 return;
             }
@@ -302,6 +332,10 @@ public class Claim implements ClaimProcessManager, generateID {
     public void getOneClaim(Scanner scanner) {
         System.out.println("Enter the ID of the claim you want to retrieve:");
         String ID = scanner.nextLine();
+
+        // Load the bank information from a file
+        LoadSaveData loadSaveData = new LoadSaveData();
+        List<BankingInfo> banks = loadSaveData.loadBankingInfo("bankingInfo.txt");
 
         // Find the claim in the list of claims
         for (Claim claim : claims) {
