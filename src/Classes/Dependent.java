@@ -42,9 +42,19 @@ public class Dependent extends Customer implements generateID {
         System.out.println("Enter Full Name:");
         String fullName = scanner.nextLine();
 
-        System.out.println("Enter Insurance Card number:");
-        int insuranceCard = scanner.nextInt();
-        scanner.nextLine(); // consume newline left-over
+        int insuranceCard;
+        while (true) {
+            System.out.println("Enter Insurance Card number (10 digits):");
+            insuranceCard = scanner.nextInt();
+            scanner.nextLine(); // consume newline left-over
+
+            String insuranceCardStr = Integer.toString(insuranceCard);
+            if (insuranceCardStr.length() == 10) {
+                break;
+            } else {
+                System.out.println("Invalid Insurance Card number. It should be exactly 10 digits.");
+            }
+        }
 
         System.out.println("Enter Policy Holder's ID:");
         String policyHolderId = scanner.nextLine();

@@ -4,12 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a59f07c4-c277-4573-abd2-8ea79995e338" name="Changes" comment="Update the authorship and the IDGenerator">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="a59f07c4-c277-4573-abd2-8ea79995e338" name="Changes" comment="Create the UI for the users to interact with the system">
       <change beforePath="$PROJECT_DIR$/src/Classes/Claim.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Claim.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Dependent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Dependent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/PolicyHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/PolicyHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +72,7 @@
       <workItem from="1711878952130" duration="3986000" />
       <workItem from="1711992167462" duration="9351000" />
       <workItem from="1712027958811" duration="5703000" />
-      <workItem from="1712092254901" duration="3096000" />
+      <workItem from="1712092254901" duration="3335000" />
     </task>
     <task id="LOCAL-00001" summary="The customer, dependent and policyholder class alongside an interface for the Unique ID generator">
       <option name="closed" value="true" />
@@ -124,7 +122,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712092581503</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Create the UI for the users to interact with the system">
+      <option name="closed" value="true" />
+      <created>1712095582839</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1712095582839</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -137,7 +143,8 @@
     <MESSAGE value="Update on the Customer, Dependent and PolicyHolder classes" />
     <MESSAGE value="The BankingInfo class and CLaimProcessManager Interface" />
     <MESSAGE value="Update the authorship and the IDGenerator" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update the authorship and the IDGenerator" />
+    <MESSAGE value="Create the UI for the users to interact with the system" />
+    <option name="LAST_COMMIT_MESSAGE" value="Create the UI for the users to interact with the system" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

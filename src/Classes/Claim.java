@@ -143,9 +143,19 @@ public class Claim implements ClaimProcessManager, generateID {
         System.out.println("Enter Insured Person:");
         String insuredPerson = scanner.nextLine();
 
-        System.out.println("Enter Card Number:");
-        int cardNumber = scanner.nextInt();
-        scanner.nextLine(); // consume newline left-over
+        long cardNumber;
+        while (true) {
+            System.out.println("Enter Card Number (10 digits):");
+            cardNumber = scanner.nextLong();
+            scanner.nextLine(); // consume newline left-over
+
+            String cardNumberStr = Long.toString(cardNumber);
+            if (cardNumberStr.length() == 10) {
+                break;
+            } else {
+                System.out.println("Invalid Card Number. It should be exactly 10 digits.");
+            }
+        }
 
         System.out.println("Enter Exam Date (dd/MM/yyyy):");
         Date examDate = null;
@@ -158,6 +168,13 @@ public class Claim implements ClaimProcessManager, generateID {
         System.out.println("Enter Documents (comma separated):");
         List<String> documents = new ArrayList<>(Arrays.asList(scanner.nextLine().split(",")));
 
+        // Format the documents
+        for (int i = 0; i < documents.size(); i++) {
+            String documentName = documents.get(i);
+            documentName = ID + "_" + cardNumber + "_" + documentName + ".pdf";
+            documents.set(i, documentName);
+        }
+
         System.out.println("Enter Claim Amount:");
         double claimAmount = scanner.nextDouble();
         scanner.nextLine(); // consume newline left-over
@@ -169,10 +186,9 @@ public class Claim implements ClaimProcessManager, generateID {
         String bankingInfo = scanner.nextLine();
 
         // Create a new Claim object
-        Claim newClaim = new Claim(ID, claimDate, insuredPerson, cardNumber, examDate, documents, claimAmount, status, bankingInfo);
+        Claim newClaim = new Claim(ID, claimDate, insuredPerson, Math.toIntExact(cardNumber), examDate, documents, claimAmount, status, bankingInfo);
 
         // Add the new claim to the list of claims
-        // Assuming there's a static method in the Claim class to add a claim
         Claim.addClaim(newClaim);
 
         System.out.println("Claim added successfully with ID: " + ID);
@@ -219,8 +235,31 @@ public class Claim implements ClaimProcessManager, generateID {
                 System.out.println("Enter new Status (APPROVED, REJECTED, PENDING):");
                 Status status = Status.valueOf(scanner.nextLine().toUpperCase());
 
-                System.out.println("Enter new Banking Info:");
-                String bankingInfo = scanner.nextLine();
+                String bankId;
+                while (true) {
+                    System.out.println("Enter the Bank ID (format b- followed by 7 digits):");
+                    bankId = scanner.nextLine();
+
+                    if (bankId.matches("b-\\d{7}")) {
+                        break;
+                    } else {
+                        System.out.println("Invalid Bank ID. It should be in the format b- followed by 7 digits.");
+                    }
+                }
+                System.out.println("Enter the Bank Name:");
+                String bankName = scanner.nextLine();
+
+                System.out.println("Enter the Account Number:");
+                double accountNumber = scanner.nextDouble();
+                scanner.nextLine(); // consume newline left-over
+
+                // Create a new BankingInfo object
+                BankingInfo bankid = new BankingInfo();
+                String id = bankid.IDGenerator();
+                BankingInfo newBank = new BankingInfo(id, bankName, accountNumber);
+
+                // Convert the BankingInfo object to a string
+                String bankingInfo = newBank.toString();
 
                 // Update the claim with the new details
                 claim.setClaimDate(claimDate);
