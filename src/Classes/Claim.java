@@ -16,7 +16,7 @@ public class Claim implements ClaimProcessManager, generateID {
     private String ID;
     private Date ClaimDate;
     private String InsuredPerson;
-    private int CardNumber;
+    private long CardNumber;
     private Date ExamDate;
     private List<String> Documents;
     private double ClaimAmount;
@@ -28,7 +28,7 @@ public class Claim implements ClaimProcessManager, generateID {
 
     public Claim() {
     }
-    public Claim(String ID, Date claimDate, String insuredPerson, int cardNumber, Date examDate, List<String> documents, double claimAmount, Status status, String bankingInfo) {
+    public Claim(String ID, Date claimDate, String insuredPerson, long cardNumber, Date examDate, List<String> documents, double claimAmount, Status status, String bankingInfo) {
         this.ID = ID;
         this.ClaimDate = claimDate;
         this.InsuredPerson = insuredPerson;
@@ -64,11 +64,11 @@ public class Claim implements ClaimProcessManager, generateID {
         InsuredPerson = insuredPerson;
     }
 
-    public int getCardNumber() {
+    public long getCardNumber() {
         return CardNumber;
     }
 
-    public void setCardNumber(int cardNumber) {
+    public void setCardNumber(long cardNumber) {
         CardNumber = cardNumber;
     }
 
@@ -129,13 +129,12 @@ public class Claim implements ClaimProcessManager, generateID {
     }
     @Override
     public void addClaim(Scanner scanner) {
-        System.out.println("Enter ID:");
-        String ID = scanner.nextLine();
+        String ID = IDGenerator();
 
-        System.out.println("Enter Claim Date (dd/MM/yyyy):");
+        System.out.println("Enter Claim Date (yyyy-MM-dd):");
         Date claimDate = null;
         try {
-            claimDate = new SimpleDateFormat("dd/MM/yyyy").parse(scanner.nextLine());
+            claimDate = new SimpleDateFormat("yyyy-MM-dd").parse(scanner.nextLine());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -157,10 +156,10 @@ public class Claim implements ClaimProcessManager, generateID {
             }
         }
 
-        System.out.println("Enter Exam Date (dd/MM/yyyy):");
+        System.out.println("Enter Exam Date (yyyy-MM-dd):");
         Date examDate = null;
         try {
-            examDate = new SimpleDateFormat("dd/MM/yyyy").parse(scanner.nextLine());
+            examDate = new SimpleDateFormat("yyyy-MM-dd").parse(scanner.nextLine());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -179,44 +178,28 @@ public class Claim implements ClaimProcessManager, generateID {
         double claimAmount = scanner.nextDouble();
         scanner.nextLine(); // consume newline left-over
 
-        System.out.println("Enter Status (APPROVED, REJECTED, PENDING):");
+        System.out.println("Enter Status (NEW, PROCESSING, DONE):");
         Status status = Status.valueOf(scanner.nextLine().toUpperCase());
 
-        String bankId;
-        while (true) {
-            System.out.println("Enter the Bank ID (format b- followed by 7 digits):");
-            bankId = scanner.nextLine();
+        System.out.println("Enter Bank Info (format: b-xxxxxxx - BankName - AccountNumber):");
+        String bankingInfo = scanner.nextLine();
 
-            if (bankId.matches("b-\\d{7}")) {
-                break;
-            } else {
-                System.out.println("Invalid Bank ID. It should be in the format b- followed by 7 digits.");
-            }
+        // Regular expression to match the required format
+        String regex = "b-\\d{7} - .+ - \\d+(\\.\\d+)?";
+
+        while (!bankingInfo.matches(regex)) {
+            System.out.println("Invalid input. Please enter in the format: b-xxxxxxx - BankName - AccountNumber");
+            bankingInfo = scanner.nextLine();
         }
-        System.out.println("Enter the Bank Name:");
-        String bankName = scanner.nextLine();
-
-        System.out.println("Enter the Account Number:");
-        double accountNumber = scanner.nextDouble();
-        scanner.nextLine(); // consume newline left-over
-
-        // Create a new BankingInfo object
-        BankingInfo bankid = new BankingInfo();
-        String id = bankid.IDGenerator();
-        BankingInfo newBank = new BankingInfo(id, bankName, accountNumber);
-
-        // Save the BankingInfo object to a file
-        LoadSaveData dataHandler = new LoadSaveData();
-        dataHandler.saveBankingInfo(newBank, "BankingInfo.txt");
-
-        // Convert the BankingInfo object to a string
-        String bankingInfo = newBank.toString();
 
         // Create a new Claim object
-        Claim newClaim = new Claim(ID, claimDate, insuredPerson, Math.toIntExact(cardNumber), examDate, documents, claimAmount, status, bankingInfo);
+        Claim newClaim = new Claim(ID, claimDate, insuredPerson, cardNumber, examDate, documents, claimAmount, status, bankingInfo);
 
         // Add the new claim to the list of claims
         Claim.addClaim(newClaim);
+
+        LoadSaveData loadSaveData = new LoadSaveData();
+        loadSaveData.saveClaim(newClaim);
 
         System.out.println("Claim added successfully with ID: " + ID);
     }
@@ -225,14 +208,20 @@ public class Claim implements ClaimProcessManager, generateID {
         System.out.println("Enter the ID of the claim you want to update:");
         String ID = scanner.nextLine();
 
+        // Create an instance of LoadSaveData
+        LoadSaveData loadSaveData = new LoadSaveData();
+
+        // Load the claims from the file
+        List<Claim> claims = loadSaveData.loadClaim();
+
         // Find the claim in the list of claims
         for (Claim claim : claims) {
             if (claim.getID().equals(ID)) {
                 // If the claim is found, ask for the new details
-                System.out.println("Enter new Claim Date (dd/MM/yyyy):");
+                System.out.println("Enter new Claim Date (yyyy-MM-dd):");
                 Date claimDate = null;
                 try {
-                    claimDate = new SimpleDateFormat("dd/MM/yyyy").parse(scanner.nextLine());
+                    claimDate = new SimpleDateFormat("yyyy-MM-dd").parse(scanner.nextLine());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -241,13 +230,13 @@ public class Claim implements ClaimProcessManager, generateID {
                 String insuredPerson = scanner.nextLine();
 
                 System.out.println("Enter new Card Number:");
-                int cardNumber = scanner.nextInt();
+                long cardNumber = scanner.nextInt();
                 scanner.nextLine(); // consume newline left-over
 
-                System.out.println("Enter new Exam Date (dd/MM/yyyy):");
+                System.out.println("Enter new Exam Date (yyyy-MM-dd):");
                 Date examDate = null;
                 try {
-                    examDate = new SimpleDateFormat("dd/MM/yyyy").parse(scanner.nextLine());
+                    examDate = new SimpleDateFormat("yyyy-MM-dd").parse(scanner.nextLine());
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -259,39 +248,19 @@ public class Claim implements ClaimProcessManager, generateID {
                 double claimAmount = scanner.nextDouble();
                 scanner.nextLine(); // consume newline left-over
 
-                System.out.println("Enter new Status (APPROVED, REJECTED, PENDING):");
+                System.out.println("Enter new Status (NEW, PROCESSING, DONE):");
                 Status status = Status.valueOf(scanner.nextLine().toUpperCase());
 
-                System.out.println("Enter the new Bank ID (format b- followed by 7 digits):");
-                String newBankId = scanner.nextLine();
+                System.out.println("Enter Bank Info (format: b-xxxxxxx - BankName - AccountNumber):");
+                String bankingInfo = scanner.nextLine();
 
-                // Validate the new bank ID
-                while (!newBankId.matches("b-\\d{7}")) {
-                    System.out.println("Invalid Bank ID. It should be in the format b- followed by 7 digits.");
-                    newBankId = scanner.nextLine();
+                // Regular expression to match the required format
+                String regex = "b-\\d{7} - .+ - \\d+(\\.\\d+)?";
+
+                while (!bankingInfo.matches(regex)) {
+                    System.out.println("Invalid input. Please enter in the format: b-xxxxxxx - BankName - AccountNumber");
+                    bankingInfo = scanner.nextLine();
                 }
-
-                System.out.println("Enter the new Bank Name:");
-                String bankName = scanner.nextLine();
-
-                System.out.println("Enter the new Account Number:");
-                double accountNumber = scanner.nextDouble();
-                scanner.nextLine(); // consume newline left-over
-
-                // Create a new BankingInfo object
-                BankingInfo bankid = new BankingInfo();
-                String id = bankid.IDGenerator();
-                BankingInfo newBank = new BankingInfo(id, bankName, accountNumber);
-
-                // Set the new bank ID
-                newBank.setID(newBankId);
-
-                // Convert the BankingInfo object to a string
-                String bankingInfo = newBank.toString();
-
-                // Update the claim with the new details
-                LoadSaveData dataHandler = new LoadSaveData();
-                dataHandler.saveBankingInfo(newBank, "BankingInfo.txt");
 
                 claim.setClaimDate(claimDate);
                 claim.setInsuredPerson(insuredPerson);
@@ -301,6 +270,10 @@ public class Claim implements ClaimProcessManager, generateID {
                 claim.setClaimAmount(claimAmount);
                 claim.setStatus(status);
                 claim.setBankingInfo(bankingInfo);
+
+                // Save the updated claim to the file
+                loadSaveData.saveClaim(claim);
+
                 System.out.println("Claim updated successfully with ID: " + ID);
                 return;
             }
@@ -314,12 +287,22 @@ public class Claim implements ClaimProcessManager, generateID {
         System.out.println("Enter the ID of the claim you want to delete:");
         String ID = scanner.nextLine();
 
+        // Create an instance of LoadSaveData
+        LoadSaveData loadSaveData = new LoadSaveData();
+
+        // Load the claims from the file
+        List<Claim> claims = loadSaveData.loadClaim();
+
         // Find the claim in the list of claims
         for (Iterator<Claim> iterator = claims.iterator(); iterator.hasNext();) {
             Claim claim = iterator.next();
             if (claim.getID().equals(ID)) {
                 // If the claim is found, remove it from the list
                 iterator.remove();
+
+                // Save the updated list of claims back to the file
+                loadSaveData.saveAllClaims(claims);
+
                 System.out.println("Claim deleted successfully with ID: " + ID);
                 return;
             }
@@ -333,9 +316,11 @@ public class Claim implements ClaimProcessManager, generateID {
         System.out.println("Enter the ID of the claim you want to retrieve:");
         String ID = scanner.nextLine();
 
-        // Load the bank information from a file
+        // Create an instance of LoadSaveData
         LoadSaveData loadSaveData = new LoadSaveData();
-        List<BankingInfo> banks = loadSaveData.loadBankingInfo("bankingInfo.txt");
+
+        // Load the claims from the file
+        List<Claim> claims = loadSaveData.loadClaim();
 
         // Find the claim in the list of claims
         for (Claim claim : claims) {
@@ -359,6 +344,12 @@ public class Claim implements ClaimProcessManager, generateID {
     }
     @Override
     public void getAllClaims() {
+        // Create an instance of LoadSaveData
+        LoadSaveData loadSaveData = new LoadSaveData();
+
+        // Load the claims from the file
+        List<Claim> claims = loadSaveData.loadClaim();
+
         // If there are no claims, inform the user
         if (claims.isEmpty()) {
             System.out.println("No claims found.");
@@ -370,19 +361,18 @@ public class Claim implements ClaimProcessManager, generateID {
             System.out.println(claim.toString());
         }
     }
-
     @Override
     public String toString() {
         return  '{' +
-                "ID=" + ID + '\'' +
+                "ID=" + ID +
                 ", ClaimDate=" + ClaimDate +
-                ", InsuredPerson=" + InsuredPerson + '\'' +
+                ", InsuredPerson=" + InsuredPerson +
                 ", CardNumber=" + CardNumber +
                 ", ExamDate=" + ExamDate +
                 ", Documents=" + Documents +
                 ", ClaimAmount=" + ClaimAmount +
                 ", status=" + status +
-                ", BankingInfo=" + BankingInfo + '\'' +
+                ", BankingInfo=" + BankingInfo +
                 '}';
     }
 }

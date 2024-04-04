@@ -49,7 +49,8 @@ public class Main {
             System.out.println("1. Create Bank");
             System.out.println("2. Update Bank");
             System.out.println("3. Read Bank");
-            System.out.println("4. Back to Main Menu");
+            System.out.println("4. Read All Banks");
+            System.out.println("5. Back to Main Menu");
 
             int option = scanner.nextInt();
             scanner.nextLine(); // consume newline left-over
@@ -65,6 +66,9 @@ public class Main {
                     BankingInfo.readBank(scanner);
                     break;
                 case 4:
+                    BankingInfo.readAllBanks();
+                    break;
+                case 5:
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");
