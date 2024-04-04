@@ -176,4 +176,78 @@ public class LoadSaveData {
             }
         }
     }
+    public void saveCard(InsuranceCard card) {
+        String fileName = "src/Data/InsuranceCard.txt";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(fileName, true)); // true to append to existing file
+            writer.write(card.getID() + ", " + card.getCardHolder() + ", " + card.getPolicyOwner() + ", " + sdf.format(card.getExpiryDate()));
+            writer.newLine(); // to write each object on a new line
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public List<InsuranceCard> loadCard() {
+        String fileName = "src/Data/InsuranceCard.txt";
+        List<InsuranceCard> cards = new ArrayList<>();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(fileName));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(", "); // split the line using the delimiter
+                String id = parts[0].trim(); // directly use the first part as ID
+                String cardHolder = parts[1].trim(); // directly use the second part as cardHolder
+                String policyOwner = parts[2].trim(); // directly use the third part as policyOwner
+                Date expiryDate = new SimpleDateFormat("yyyy-MM-dd").parse(parts[3].trim()); // directly use the fourth part as expiryDate
+                InsuranceCard card = new InsuranceCard(id, cardHolder, policyOwner, expiryDate);
+                cards.add(card);
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return cards;
+    }
+    public void updateCard(List<InsuranceCard> cards) {
+        String fileName = "src/Data/InsuranceCard.txt";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(fileName, false)); // false to overwrite the file
+            for (InsuranceCard card : cards) {
+                writer.write(card.getID() + ", " +
+                        card.getCardHolder() + ", " +
+                        card.getPolicyOwner() + ", " +
+                        sdf.format(card.getExpiryDate()));
+                writer.newLine(); // to write each object on a new line
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
