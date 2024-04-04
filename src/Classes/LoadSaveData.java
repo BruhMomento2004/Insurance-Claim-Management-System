@@ -44,7 +44,7 @@ public class LoadSaveData {
                 String[] parts = line.split(", "); // split the line using the delimiter
                 String id = parts[0].trim(); // directly use the first part as ID
                 String bankName = parts[1].trim(); // directly use the second part as bankName
-                double accountNumber = Double.parseDouble(parts[2].trim()); // directly use the third part as accountNumber
+                long accountNumber = Long.parseLong(parts[2].trim()); // directly use the third part as accountNumber
                 BankingInfo bankInfo = new BankingInfo(id, bankName, accountNumber);
                 bankingInfos.add(bankInfo);
             }
@@ -60,6 +60,29 @@ public class LoadSaveData {
             }
         }
         return bankingInfos;
+    }
+    public void updateBankingInfo(List<BankingInfo> bankingInfos) {
+        String fileName = "src/Data/bankingInfo.txt";
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(fileName, false)); // false to overwrite the file
+            for (BankingInfo bankInfo : bankingInfos) {
+                writer.write(bankInfo.getID() + ", " +
+                        bankInfo.getBankName() + ", " +
+                        bankInfo.getAccountNumber());
+                writer.newLine(); // to write each object on a new line
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
     public void saveClaim(Claim claim) {
         String fileName = "src/Data/claims.txt";
@@ -123,7 +146,7 @@ public class LoadSaveData {
         }
         return claims;
     }
-    public void saveAllClaims(List<Claim> claims) {
+    public void updateClaims(List<Claim> claims) {
         String fileName = "src/Data/claims.txt";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         BufferedWriter writer = null;

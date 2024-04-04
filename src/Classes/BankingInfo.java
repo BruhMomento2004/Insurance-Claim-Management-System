@@ -14,13 +14,13 @@ import java.util.Scanner;
 public class BankingInfo implements generateID {
     private String ID;
     private String BankName;
-    private double AccountNumber;
+    private long AccountNumber;
     private static Random random = new Random();
     private static List<BankingInfo> banks = new ArrayList<>();
 
     public BankingInfo() {
     }
-    public BankingInfo(String ID, String bankName, double accountNumber) {
+    public BankingInfo(String ID, String bankName, long accountNumber) {
         this.ID = ID;
         this.BankName = bankName;
         this.AccountNumber = accountNumber;
@@ -45,7 +45,7 @@ public class BankingInfo implements generateID {
         return AccountNumber;
     }
 
-    public void setAccountNumber(double accountNumber) {
+    public void setAccountNumber(long accountNumber) {
         AccountNumber = accountNumber;
     }
     @Override
@@ -60,7 +60,7 @@ public class BankingInfo implements generateID {
         String bankName = scanner.nextLine();
 
         System.out.println("Enter the Account Number:");
-        double accountNumber = scanner.nextDouble();
+        long accountNumber = scanner.nextLong();
         scanner.nextLine(); // consume newline left-over
 
         // Create a new BankingInfo object
@@ -70,13 +70,19 @@ public class BankingInfo implements generateID {
 
         // Save the new BankingInfo object to a file
         LoadSaveData loadSaveData = new LoadSaveData();
-        loadSaveData.saveBankingInfo(newBank, "bankingInfo.txt");
+        loadSaveData.saveBankingInfo(newBank);
 
         System.out.println("Banking information created successfully.");
     }
     public static void updateBank(Scanner scanner) {
-        System.out.println("Enter the ID of the bank you want to update:");
+        System.out.println("Enter the ID of the bank you want to update (b-xxxxxxx):");
         String id = scanner.nextLine();
+
+        // Create an instance of LoadSaveData
+        LoadSaveData loadSaveData = new LoadSaveData();
+
+        // Load the bank information from the file
+        List<BankingInfo> banks = loadSaveData.loadBankingInfo();
 
         // Find the bank in the list of banks
         for (BankingInfo bank : banks) {
@@ -86,17 +92,16 @@ public class BankingInfo implements generateID {
                 String bankName = scanner.nextLine();
 
                 System.out.println("Enter new Account Number:");
-                double accountNumber = scanner.nextDouble();
+                long accountNumber = scanner.nextLong();
                 scanner.nextLine(); // consume newline left-over
 
                 bank.setBankName(bankName);
                 bank.setAccountNumber(accountNumber);
 
-                // Save the updated bank info
-                LoadSaveData loadSaveData = new LoadSaveData();
-                loadSaveData.saveBankingInfo(bank, "bankingInfo.txt");
+                // Update the bank information in the file
+                loadSaveData.updateBankingInfo(banks);
 
-                System.out.println("Bank updated successfully with ID: " + id);
+                System.out.println("Bank updated successfully");
                 return;
             }
         }
@@ -105,12 +110,12 @@ public class BankingInfo implements generateID {
         System.out.println("Bank with ID: " + id + " not found.");
     }
     public static void readBank(Scanner scanner) {
-        System.out.println("Enter the ID of the bank you want to read:");
+        System.out.println("Enter the ID of the bank you want to read (b-xxxxxxx):");
         String id = scanner.nextLine();
 
         // Load the bank information from a file
         LoadSaveData loadSaveData = new LoadSaveData();
-        List<BankingInfo> banks = loadSaveData.loadBankingInfo("bankingInfo.txt");
+        List<BankingInfo> banks = loadSaveData.loadBankingInfo();
 
         // Search for the bank in the list of banks
         for (BankingInfo bank : banks) {
@@ -124,12 +129,29 @@ public class BankingInfo implements generateID {
         // If the bank is not found, print an error message
         System.out.println("Bank with ID: " + id + " not found.");
     }
+    public static void readAllBanks() {
+        // Load the bank information from a file
+        LoadSaveData loadSaveData = new LoadSaveData();
+        List<BankingInfo> banks = loadSaveData.loadBankingInfo();
+
+        // If there are no banks, inform the user
+        if (banks.isEmpty()) {
+            System.out.println("No banks found.");
+            return;
+        }
+
+        // Iterate over the list of banks and print each bank's details
+        for (BankingInfo bank : banks) {
+            System.out.println(bank.toString());
+        }
+    }
+
 
     @Override
     public String toString() {
         return  '{' +
-                "ID=" + ID + '\'' +
-                ", BankName=" + BankName + '\'' +
+                "ID=" + ID +
+                ", BankName=" + BankName +
                 ", AccountNumber=" + AccountNumber +
                 '}';
     }

@@ -205,7 +205,7 @@ public class Claim implements ClaimProcessManager, generateID {
     }
     @Override
     public void updateClaim(Scanner scanner) {
-        System.out.println("Enter the ID of the claim you want to update:");
+        System.out.println("Enter the ID of the claim you want to update (f-xxxxxxxxxx):");
         String ID = scanner.nextLine();
 
         // Create an instance of LoadSaveData
@@ -284,7 +284,7 @@ public class Claim implements ClaimProcessManager, generateID {
     }
     @Override
     public void deleteClaim(Scanner scanner) {
-        System.out.println("Enter the ID of the claim you want to delete:");
+        System.out.println("Enter the ID of the claim you want to delete (f-xxxxxxxxxx):");
         String ID = scanner.nextLine();
 
         // Create an instance of LoadSaveData
@@ -301,7 +301,7 @@ public class Claim implements ClaimProcessManager, generateID {
                 iterator.remove();
 
                 // Save the updated list of claims back to the file
-                loadSaveData.saveAllClaims(claims);
+                loadSaveData.updateClaims(claims);
 
                 System.out.println("Claim deleted successfully with ID: " + ID);
                 return;
@@ -313,7 +313,7 @@ public class Claim implements ClaimProcessManager, generateID {
     }
     @Override
     public void getOneClaim(Scanner scanner) {
-        System.out.println("Enter the ID of the claim you want to retrieve:");
+        System.out.println("Enter the ID of the claim you want to retrieve (f-xxxxxxxxxx):");
         String ID = scanner.nextLine();
 
         // Create an instance of LoadSaveData
