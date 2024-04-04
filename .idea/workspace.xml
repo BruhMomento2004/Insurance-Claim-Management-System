@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a59f07c4-c277-4573-abd2-8ea79995e338" name="Changes" comment="update on the BankingInfo, LoadSaveData and minor fixes to Claim classes to implement and call up the ID in the txt files with the correct data format.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="a59f07c4-c277-4573-abd2-8ea79995e338" name="Changes" comment="add in the methods for the InsuranceCard class in LoadSaveData, then call it.">
       <change beforePath="$PROJECT_DIR$/src/Classes/Dependent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Dependent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/InsuranceCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/InsuranceCard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/LoadSaveData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/LoadSaveData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/PolicyHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/PolicyHolder.java" afterDir="false" />
     </list>
@@ -90,7 +88,7 @@
       <workItem from="1712210082056" duration="64000" />
       <workItem from="1712210293191" duration="7000" />
       <workItem from="1712211054631" duration="4759000" />
-      <workItem from="1712216646064" duration="10239000" />
+      <workItem from="1712216646064" duration="11269000" />
     </task>
     <task id="LOCAL-00001" summary="The customer, dependent and policyholder class alongside an interface for the Unique ID generator">
       <option name="closed" value="true" />
@@ -188,7 +186,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712259277242</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="add in the methods for the InsuranceCard class in LoadSaveData, then call it.">
+      <option name="closed" value="true" />
+      <created>1712263785677</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1712263785677</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -207,7 +213,8 @@
     <MESSAGE value="Add in the two method Load and Save BankingInfo" />
     <MESSAGE value="update on the Claim, LoadSaveData and Main class to the wanted data format" />
     <MESSAGE value="update on the BankingInfo, LoadSaveData and minor fixes to Claim classes to implement and call up the ID in the txt files with the correct data format." />
-    <option name="LAST_COMMIT_MESSAGE" value="update on the BankingInfo, LoadSaveData and minor fixes to Claim classes to implement and call up the ID in the txt files with the correct data format." />
+    <MESSAGE value="add in the methods for the InsuranceCard class in LoadSaveData, then call it." />
+    <option name="LAST_COMMIT_MESSAGE" value="add in the methods for the InsuranceCard class in LoadSaveData, then call it." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
