@@ -88,15 +88,18 @@ public class BankingInfo implements generateID {
         for (BankingInfo bank : banks) {
             if (bank.getID().equals(id)) {
                 // If the bank is found, ask for new details and update the bank
-                System.out.println("Enter new Bank Name:");
+                System.out.println("Enter new Bank Name (or type 'skip' to skip):");
                 String bankName = scanner.nextLine();
+                if (!bankName.isEmpty() && !bankName.equalsIgnoreCase("skip")) {
+                    bank.setBankName(bankName);
+                }
 
-                System.out.println("Enter new Account Number:");
-                long accountNumber = scanner.nextLong();
-                scanner.nextLine(); // consume newline left-over
-
-                bank.setBankName(bankName);
-                bank.setAccountNumber(accountNumber);
+                System.out.println("Enter new Account Number (or type 'skip' to skip):");
+                String accountNumberStr = scanner.nextLine();
+                if (!accountNumberStr.isEmpty() && !accountNumberStr.equalsIgnoreCase("skip")) {
+                    long accountNumber = Long.parseLong(accountNumberStr);
+                    bank.setAccountNumber(accountNumber);
+                }
 
                 // Update the bank information in the file
                 loadSaveData.updateBankingInfo(banks);

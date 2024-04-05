@@ -80,6 +80,18 @@ public class InsuranceCard implements generateID {
         System.out.println("Enter Card Holder's name:");
         String cardHolder = scanner.nextLine();
 
+        // Create an instance of LoadSaveData and load the cards
+        LoadSaveData loadSaveData = new LoadSaveData();
+        List<InsuranceCard> cards = loadSaveData.loadCard();
+
+        // Check if a card with the same holder already exists
+        for (InsuranceCard existingCard : cards) {
+            if (existingCard.getCardHolder().equals(cardHolder)) {
+                System.out.println("A card with holder " + cardHolder + " already exists.");
+                return;
+            }
+        }
+
         System.out.println("Enter Policy Owner's name:");
         String policyOwner = scanner.nextLine();
 
@@ -100,7 +112,6 @@ public class InsuranceCard implements generateID {
         cards.add(newCard);
 
         // Save the card to the file
-        LoadSaveData loadSaveData = new LoadSaveData();
         loadSaveData.saveCard(newCard);
 
         System.out.println("Card created successfully");
@@ -126,26 +137,30 @@ public class InsuranceCard implements generateID {
             return;
         }
 
-        System.out.println("Enter new Card Holder's name:");
+        System.out.println("Enter new Card Holder's name (or type 'skip' to skip):");
         String cardHolder = scanner.nextLine();
-
-        System.out.println("Enter new Policy Owner's name:");
-        String policyOwner = scanner.nextLine();
-
-        System.out.println("Enter new Expiry Date (in format yyyy-mm-dd):");
-        String expiryDateStr = scanner.nextLine();
-        Date expiryDate = null;
-        try {
-            expiryDate = new SimpleDateFormat("yyyy-MM-dd").parse(expiryDateStr);
-        } catch (ParseException e) {
-            System.out.println("Invalid date format. Please enter in format yyyy-mm-dd.");
-            return;
+        if (!cardHolder.isEmpty() && !cardHolder.equalsIgnoreCase("skip")) {
+            cardToUpdate.setCardHolder(cardHolder);
         }
 
-        // Update the card details
-        cardToUpdate.setCardHolder(cardHolder);
-        cardToUpdate.setPolicyOwner(policyOwner);
-        cardToUpdate.setExpiryDate(expiryDate);
+        System.out.println("Enter new Policy Owner's name (or type 'skip' to skip):");
+        String policyOwner = scanner.nextLine();
+        if (!policyOwner.isEmpty() && !policyOwner.equalsIgnoreCase("skip")) {
+            cardToUpdate.setPolicyOwner(policyOwner);
+        }
+
+        System.out.println("Enter new Expiry Date (in format yyyy-mm-dd) (or type 'skip' to skip):");
+        String expiryDateStr = scanner.nextLine();
+        if (!expiryDateStr.isEmpty() && !expiryDateStr.equalsIgnoreCase("skip")) {
+            Date expiryDate = null;
+            try {
+                expiryDate = new SimpleDateFormat("yyyy-MM-dd").parse(expiryDateStr);
+                cardToUpdate.setExpiryDate(expiryDate);
+            } catch (ParseException e) {
+                System.out.println("Invalid date format. Please enter in format yyyy-mm-dd.");
+                return;
+            }
+        }
 
         // Update the card in the file
         loadSaveData.updateCard(cards);

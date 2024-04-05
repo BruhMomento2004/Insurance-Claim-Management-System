@@ -115,13 +115,34 @@ public class PolicyHolder extends Customer{
 
         System.out.println("Customer with ID: " + id + " not found.");
     }
+
+    @Override
+    public String getCustomerID() {
+        return getId();
+    }
+
+    @Override
+    public String getCustomerFullName() {
+        return getFullName();
+    }
+
+    @Override
+    public long getCustomerInsuranceCard() {
+        return getInsuranceCard();
+    }
+
+    @Override
+    public List<String> getCustomerClaims() {
+        return null;
+    }
+
     @Override
     public String toString() {
-        return '{' + "id=" + getId() + '\'' +
-                ", FullName=" + getFullName() + '\'' +
+        return '{' + "id=" + getId() +
+                ", FullName=" + getFullName() +
                 ", InsuranceCard=" + getInsuranceCard() +
                 ", Claims=" + getClaims() +
-                "Dependents=" + dependents + '\'' +
+                "Dependents=" + dependents +
                 '}';
     }
 }

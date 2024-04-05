@@ -11,14 +11,14 @@ import java.util.*;
 public abstract class Customer implements generateID {
     private String id;
     private String FullName;
-    private int InsuranceCard;
+    private long InsuranceCard;
     private List<String> Claims;
     private static Random random = new Random();
 
 
     public Customer() {
     }
-    public Customer(String id, String fullName, int insuranceCard, List<String> claims) {
+    public Customer(String id, String fullName, long insuranceCard, List<String> claims) {
         this.id = id;
         this.FullName = fullName;
         this.InsuranceCard = insuranceCard;
@@ -41,11 +41,11 @@ public abstract class Customer implements generateID {
         FullName = fullName;
     }
 
-    public int getInsuranceCard() {
+    public long getInsuranceCard() {
         return InsuranceCard;
     }
 
-    public void setInsuranceCard(int insuranceCard) {
+    public void setInsuranceCard(long insuranceCard) {
         InsuranceCard = insuranceCard;
     }
 
@@ -76,6 +76,14 @@ public abstract class Customer implements generateID {
     public abstract void createCustomer(Scanner scanner);
     public abstract void updateCustomer(Scanner scanner);
     public abstract void readCustomer(Scanner scanner);
+
+    public abstract String getCustomerID();
+
+    public abstract String getCustomerFullName();
+
+    public abstract long getCustomerInsuranceCard();
+
+    public abstract List<String> getCustomerClaims();
 
 
     //CRU no D

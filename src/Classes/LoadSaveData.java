@@ -15,7 +15,7 @@ import Enum.Status;
 
 public class LoadSaveData {
     public void saveBankingInfo(BankingInfo bankInfo) {
-        String fileName = "src/Data/bankingInfo.txt";
+        String fileName = "src/Data/BankingInfo.txt";
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(fileName, true)); // true to append to existing file
@@ -34,19 +34,24 @@ public class LoadSaveData {
         }
     }
     public List<BankingInfo> loadBankingInfo() {
-        String fileName = "src/Data/bankingInfo.txt";
+        String fileName = "src/Data/BankingInfo.txt";
         List<BankingInfo> bankingInfos = new ArrayList<>();
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(new FileReader(fileName));
             String line;
             while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(", "); // split the line using the delimiter
-                String id = parts[0].trim(); // directly use the first part as ID
-                String bankName = parts[1].trim(); // directly use the second part as bankName
-                long accountNumber = Long.parseLong(parts[2].trim()); // directly use the third part as accountNumber
-                BankingInfo bankInfo = new BankingInfo(id, bankName, accountNumber);
-                bankingInfos.add(bankInfo);
+                String[] parts = line.split(", ");
+                if (parts.length < 3) {
+                    System.out.println("Skipping line due to insufficient data: " + line);
+                    continue;
+                }
+                String id = parts[0].trim();
+                String bankName = parts[1].trim();
+                double accountNumberDouble = Double.parseDouble(parts[2].trim());
+                long accountNumber = (long) accountNumberDouble;
+                BankingInfo bankingInfo = new BankingInfo(id, bankName, accountNumber);
+                bankingInfos.add(bankingInfo);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,7 +67,7 @@ public class LoadSaveData {
         return bankingInfos;
     }
     public void updateBankingInfo(List<BankingInfo> bankingInfos) {
-        String fileName = "src/Data/bankingInfo.txt";
+        String fileName = "src/Data/BankingInfo.txt";
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(fileName, false)); // false to overwrite the file
@@ -85,7 +90,7 @@ public class LoadSaveData {
         }
     }
     public void saveClaim(Claim claim) {
-        String fileName = "src/Data/claims.txt";
+        String fileName = "src/Data/Claims.txt";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         BufferedWriter writer = null;
         try {
@@ -113,7 +118,7 @@ public class LoadSaveData {
         }
     }
     public List<Claim> loadClaim() {
-        String fileName = "src/Data/claims.txt";
+        String fileName = "src/Data/Claims.txt";
         List<Claim> claims = new ArrayList<>();
         BufferedReader reader = null;
         try {
@@ -147,7 +152,7 @@ public class LoadSaveData {
         return claims;
     }
     public void updateClaims(List<Claim> claims) {
-        String fileName = "src/Data/claims.txt";
+        String fileName = "src/Data/Claims.txt";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         BufferedWriter writer = null;
         try {
@@ -205,6 +210,10 @@ public class LoadSaveData {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(", "); // split the line using the delimiter
+                if (parts.length < 4) {
+                    System.out.println("Skipping line due to insufficient data: " + line);
+                    continue;
+                }
                 String id = parts[0].trim(); // directly use the first part as ID
                 String cardHolder = parts[1].trim(); // directly use the second part as cardHolder
                 String policyOwner = parts[2].trim(); // directly use the third part as policyOwner
@@ -236,6 +245,84 @@ public class LoadSaveData {
                         card.getCardHolder() + ", " +
                         card.getPolicyOwner() + ", " +
                         sdf.format(card.getExpiryDate()));
+                writer.newLine(); // to write each object on a new line
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public void saveDependent(Dependent dependent) {
+        String fileName = "src/Data/Dependent.txt";
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(fileName, true)); // true to append to existing file
+            writer.write(dependent.getCustomerID() + ", " +
+                    dependent.getCustomerFullName() + ", " +
+                    dependent.getCustomerInsuranceCard() + ", " +
+                    String.join("_", dependent.getCustomerClaims()) + ", " +
+                    dependent.getPolicyHolderId());
+            writer.newLine(); // to write each object on a new line
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public List<Dependent> loadDependent() {
+        String fileName = "src/Data/Dependent.txt";
+        List<Dependent> dependents = new ArrayList<>();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(fileName));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(", "); // split the line using the delimiter
+                String customerID = parts[0].trim(); // directly use the first part as customerID
+                String customerFullName = parts[1].trim(); // directly use the second part as customerFullName
+                long customerInsuranceCard = Long.parseLong(parts[2].trim()); // directly use the third part as customerInsuranceCard
+                List<String> customerClaims = Arrays.asList(parts[3].trim().split("_")); // directly use the fourth part as customerClaims
+                String policyHolderId = parts[4].trim(); // directly use the fifth part as policyHolderId
+                Dependent dependent = new Dependent(customerID, customerFullName, customerInsuranceCard, customerClaims, policyHolderId);
+                dependents.add(dependent);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return dependents;
+    }
+    public void updateDependent(List<Dependent> dependents) {
+        String fileName = "src/Data/Dependent.txt";
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(fileName, false)); // false to overwrite the file
+            for (Dependent dependent : dependents) {
+                writer.write(dependent.getCustomerID() + ", " +
+                        dependent.getCustomerFullName() + ", " +
+                        dependent.getCustomerInsuranceCard() + ", " +
+                        String.join("_", dependent.getCustomerClaims()) + ", " +
+                        dependent.getPolicyHolderId());
                 writer.newLine(); // to write each object on a new line
             }
         } catch (IOException e) {

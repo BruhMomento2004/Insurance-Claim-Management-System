@@ -218,63 +218,72 @@ public class Claim implements ClaimProcessManager, generateID {
         for (Claim claim : claims) {
             if (claim.getID().equals(ID)) {
                 // If the claim is found, ask for the new details
-                System.out.println("Enter new Claim Date (yyyy-MM-dd):");
-                Date claimDate = null;
-                try {
-                    claimDate = new SimpleDateFormat("yyyy-MM-dd").parse(scanner.nextLine());
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                System.out.println("Enter new Claim Date (yyyy-MM-dd) or type 'skip' to skip:");
+                String claimDateStr = scanner.nextLine();
+                if (!claimDateStr.isEmpty() && !claimDateStr.equalsIgnoreCase("skip")) {
+                    try {
+                        Date claimDate = new SimpleDateFormat("yyyy-MM-dd").parse(claimDateStr);
+                        claim.setClaimDate(claimDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
 
-                System.out.println("Enter new Insured Person:");
+                System.out.println("Enter new Insured Person or type 'skip' to skip:");
                 String insuredPerson = scanner.nextLine();
-
-                System.out.println("Enter new Card Number:");
-                long cardNumber = scanner.nextInt();
-                scanner.nextLine(); // consume newline left-over
-
-                System.out.println("Enter new Exam Date (yyyy-MM-dd):");
-                Date examDate = null;
-                try {
-                    examDate = new SimpleDateFormat("yyyy-MM-dd").parse(scanner.nextLine());
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                if (!insuredPerson.isEmpty() && !insuredPerson.equalsIgnoreCase("skip")) {
+                    claim.setInsuredPerson(insuredPerson);
                 }
 
-                System.out.println("Enter new Documents (comma separated):");
-                List<String> documents = new ArrayList<>(Arrays.asList(scanner.nextLine().split(",")));
+                System.out.println("Enter new Card Number or type 'skip' to skip:");
+                String cardNumberStr = scanner.nextLine();
+                if (!cardNumberStr.isEmpty() && !cardNumberStr.equalsIgnoreCase("skip")) {
+                    long cardNumber = Long.parseLong(cardNumberStr);
+                    claim.setCardNumber(cardNumber);
+                }
 
-                System.out.println("Enter new Claim Amount:");
-                double claimAmount = scanner.nextDouble();
-                scanner.nextLine(); // consume newline left-over
+                System.out.println("Enter new Exam Date (yyyy-MM-dd) or type 'skip' to skip:");
+                String examDateStr = scanner.nextLine();
+                if (!examDateStr.isEmpty() && !examDateStr.equalsIgnoreCase("skip")) {
+                    try {
+                        Date examDate = new SimpleDateFormat("yyyy-MM-dd").parse(examDateStr);
+                        claim.setExamDate(examDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
 
-                System.out.println("Enter new Status (NEW, PROCESSING, DONE):");
-                Status status = Status.valueOf(scanner.nextLine().toUpperCase());
+                System.out.println("Enter new Documents (comma separated) or type 'skip' to skip:");
+                String documentsStr = scanner.nextLine();
+                if (!documentsStr.isEmpty() && !documentsStr.equalsIgnoreCase("skip")) {
+                    List<String> documents = new ArrayList<>(Arrays.asList(documentsStr.split(",")));
+                    claim.setDocuments(documents);
+                }
 
-                System.out.println("Enter Bank Info (format: b-xxxxxxx - BankName - AccountNumber):");
+                System.out.println("Enter new Claim Amount or type 'skip' to skip:");
+                String claimAmountStr = scanner.nextLine();
+                if (!claimAmountStr.isEmpty() && !claimAmountStr.equalsIgnoreCase("skip")) {
+                    double claimAmount = Double.parseDouble(claimAmountStr);
+                    claim.setClaimAmount(claimAmount);
+                }
+
+                System.out.println("Enter new Status (NEW, PROCESSING, DONE) or type 'skip' to skip:");
+                String statusStr = scanner.nextLine();
+                if (!statusStr.isEmpty() && !statusStr.equalsIgnoreCase("skip")) {
+                    Status status = Status.valueOf(statusStr.toUpperCase());
+                    claim.setStatus(status);
+                }
+
+                System.out.println("Enter Bank Info (format: b-xxxxxxx - BankName - AccountNumber) or type 'skip' to skip:");
                 String bankingInfo = scanner.nextLine();
-
-                // Regular expression to match the required format
-                String regex = "b-\\d{7} - .+ - \\d+(\\.\\d+)?";
-
-                while (!bankingInfo.matches(regex)) {
-                    System.out.println("Invalid input. Please enter in the format: b-xxxxxxx - BankName - AccountNumber");
-                    bankingInfo = scanner.nextLine();
+                if (!bankingInfo.isEmpty() && !bankingInfo.equalsIgnoreCase("skip")) {
+                    claim.setBankingInfo(bankingInfo);
                 }
-
-                claim.setClaimDate(claimDate);
-                claim.setInsuredPerson(insuredPerson);
-                claim.setCardNumber(cardNumber);
-                claim.setExamDate(examDate);
-                claim.setDocuments(documents);
-                claim.setClaimAmount(claimAmount);
-                claim.setStatus(status);
-                claim.setBankingInfo(bankingInfo);
 
                 // Save the updated claim to the file
-                loadSaveData.saveClaim(claim);
+                loadSaveData.updateClaims(claims);
 
-                System.out.println("Claim updated successfully with ID: " + ID);
+                System.out.println("Claim updated successfully");
                 return;
             }
         }

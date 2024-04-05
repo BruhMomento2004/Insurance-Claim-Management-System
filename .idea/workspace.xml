@@ -4,10 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a59f07c4-c277-4573-abd2-8ea79995e338" name="Changes" comment="add in the methods for the InsuranceCard class in LoadSaveData, then call it.">
+    <list default="true" id="a59f07c4-c277-4573-abd2-8ea79995e338" name="Changes" comment="The text file for the three class InsuranceCard, BankingInfo and Claims">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/BankingInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/BankingInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/Claim.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Claim.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Customer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/Dependent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Dependent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Classes/InsuranceCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/InsuranceCard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/LoadSaveData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/LoadSaveData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/PolicyHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/PolicyHolder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Data/BankingInfo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data/BankingInfo.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Data/InsuranceCard.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data/InsuranceCard.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,7 +95,8 @@
       <workItem from="1712210082056" duration="64000" />
       <workItem from="1712210293191" duration="7000" />
       <workItem from="1712211054631" duration="4759000" />
-      <workItem from="1712216646064" duration="11269000" />
+      <workItem from="1712216646064" duration="11365000" />
+      <workItem from="1712346305185" duration="6029000" />
     </task>
     <task id="LOCAL-00001" summary="The customer, dependent and policyholder class alongside an interface for the Unique ID generator">
       <option name="closed" value="true" />
@@ -194,7 +202,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712263785677</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="The text file for the three class InsuranceCard, BankingInfo and Claims">
+      <option name="closed" value="true" />
+      <created>1712267607274</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1712267607274</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,7 +230,8 @@
     <MESSAGE value="update on the Claim, LoadSaveData and Main class to the wanted data format" />
     <MESSAGE value="update on the BankingInfo, LoadSaveData and minor fixes to Claim classes to implement and call up the ID in the txt files with the correct data format." />
     <MESSAGE value="add in the methods for the InsuranceCard class in LoadSaveData, then call it." />
-    <option name="LAST_COMMIT_MESSAGE" value="add in the methods for the InsuranceCard class in LoadSaveData, then call it." />
+    <MESSAGE value="The text file for the three class InsuranceCard, BankingInfo and Claims" />
+    <option name="LAST_COMMIT_MESSAGE" value="The text file for the three class InsuranceCard, BankingInfo and Claims" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
