@@ -2,6 +2,8 @@ package Classes;
 
 /**
  * @author <Nguyen Thanh Tung - s3979489>
+ * Reference: https://github.com/VINAYKUMARKUNDER/Insurance-Management-System.git and 
+ * https://youtu.be/xNeOHmqNVus?si=4L5anBRVpkQJviVH
  */
 
 import Interface.generateID;
@@ -61,14 +63,14 @@ public class BankingInfo implements generateID {
 
         System.out.println("Enter the Account Number:");
         long accountNumber = scanner.nextLong();
-        scanner.nextLine(); // consume newline left-over
+        scanner.nextLine();
 
         // Create a new BankingInfo object
         BankingInfo bankid = new BankingInfo();
         String id = bankid.IDGenerator();
         BankingInfo newBank = new BankingInfo(id, bankName, accountNumber);
 
-        // Save the new BankingInfo object to a file
+        // Save the new BankingInfo object to the text file
         LoadSaveData loadSaveData = new LoadSaveData();
         loadSaveData.saveBankingInfo(newBank);
 
@@ -78,10 +80,10 @@ public class BankingInfo implements generateID {
         System.out.println("Enter the ID of the bank you want to update (b-xxxxxxx):");
         String id = scanner.nextLine();
 
-        // Create an instance of LoadSaveData
+        // Create an instance of LoadSaveData to call the loadBankingInfo method
         LoadSaveData loadSaveData = new LoadSaveData();
 
-        // Load the bank information from the file
+        // Load the bank information from the text file
         List<BankingInfo> banks = loadSaveData.loadBankingInfo();
 
         // Find the bank in the list of banks
@@ -101,7 +103,7 @@ public class BankingInfo implements generateID {
                     bank.setAccountNumber(accountNumber);
                 }
 
-                // Update the bank information in the file
+                // Update the bank information in the text file
                 loadSaveData.updateBankingInfo(banks);
 
                 System.out.println("Bank updated successfully");
@@ -116,7 +118,7 @@ public class BankingInfo implements generateID {
         System.out.println("Enter the ID of the bank you want to read (b-xxxxxxx):");
         String id = scanner.nextLine();
 
-        // Load the bank information from a file
+        // Load the bank information from the text file
         LoadSaveData loadSaveData = new LoadSaveData();
         List<BankingInfo> banks = loadSaveData.loadBankingInfo();
 
@@ -124,7 +126,7 @@ public class BankingInfo implements generateID {
         for (BankingInfo bank : banks) {
             if (bank.getID().equals(id)) {
                 // If the bank is found, print the bank's details
-                System.out.println(bank.toString());
+                System.out.println(bank);
                 return;
             }
         }
@@ -143,7 +145,7 @@ public class BankingInfo implements generateID {
             return;
         }
 
-        // Iterate over the list of banks and print each bank's details
+        // Print each bank's details
         for (BankingInfo bank : banks) {
             System.out.println(bank.toString());
         }

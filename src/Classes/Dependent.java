@@ -2,6 +2,8 @@ package Classes;
 
 /**
  * @author <Nguyen Thanh Tung - s3979489>
+ * Reference: https://github.com/VINAYKUMARKUNDER/Insurance-Management-System.git and
+ * https://youtu.be/xNeOHmqNVus?si=4L5anBRVpkQJviVH
  */
 
 import Interface.generateID;
@@ -56,7 +58,7 @@ public class Dependent extends Customer implements generateID {
         while (true) {
             System.out.println("Enter Insurance Card number (10 digits):");
             insuranceCard = scanner.nextLong();
-            scanner.nextLine(); // consume newline left-over
+            scanner.nextLine();
 
             String insuranceCardStr = Long.toString(insuranceCard);
             if (insuranceCardStr.length() == 10) {
@@ -69,7 +71,7 @@ public class Dependent extends Customer implements generateID {
         System.out.println("Enter Policy Holder's ID (c-xxxxxxx):");
         String policyHolderId = scanner.nextLine();
 
-        // Regular expression for the required ID format
+        // require for the correct ID format
         String idFormat = "c-\\d{7}";
 
         while (!policyHolderId.matches(idFormat)) {
@@ -86,10 +88,11 @@ public class Dependent extends Customer implements generateID {
 
         // Create a new Dependent object
         Dependent newDependent = new Dependent(id, fullName, insuranceCard, claims, policyHolderId);
+
         // Add the new dependent to the list of dependents
         Dependent.addDependent(newDependent);
 
-        // Save the new dependent to the file
+        // Save the new dependent to the text file
         LoadSaveData loadSaveData = new LoadSaveData();
         loadSaveData.saveDependent(newDependent);
 
@@ -150,7 +153,7 @@ public class Dependent extends Customer implements generateID {
                     dependent.setPolicyHolderId(policyHolderId);
                 }
 
-                // Save the updated dependent back to the file
+                // Save the updated dependent back to the text file
                 loadSaveData.updateDependent(dependents);
 
                 System.out.println("Dependent updated successfully.");

@@ -1,5 +1,11 @@
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+/**
+ * @author <Nguyen Thanh Tung - s3979489>
+ * Reference: https://github.com/VINAYKUMARKUNDER/Insurance-Management-System.git and
+ * https://youtu.be/xNeOHmqNVus?si=4L5anBRVpkQJviVH
+ */
+
 import Classes.*;
 
 import java.util.Scanner;
@@ -18,7 +24,7 @@ public class Main {
             System.out.println("5. Exit");
 
             int option = scanner.nextInt();
-            scanner.nextLine(); // consume newline left-over
+            scanner.nextLine();
 
             switch (option) {
                 case 1:
@@ -53,7 +59,7 @@ public class Main {
             System.out.println("5. Back to Main Menu");
 
             int option = scanner.nextInt();
-            scanner.nextLine(); // consume newline left-over
+            scanner.nextLine();
 
             switch (option) {
                 case 1:
@@ -90,7 +96,7 @@ public class Main {
             System.out.println("6. Back to Main Menu");
 
             int option = scanner.nextInt();
-            scanner.nextLine(); // consume newline left-over
+            scanner.nextLine();
 
             switch (option) {
                 case 1:
@@ -126,7 +132,7 @@ public class Main {
             System.out.println("5. Back to Main Menu");
 
             int option = scanner.nextInt();
-            scanner.nextLine(); // consume newline left-over
+            scanner.nextLine();
 
             switch (option) {
                 case 1:
@@ -161,7 +167,7 @@ public class Main {
                 System.out.println("4. Exit the System");
 
                 int option = scanner.nextInt();
-                scanner.nextLine(); // consume newline left-over
+                scanner.nextLine();
 
                 switch (option) {
                     case 1:
@@ -194,7 +200,7 @@ public class Main {
                 System.out.println("5. Back to Main Menu");
 
                 int option = scanner.nextInt();
-                scanner.nextLine(); // consume newline left-over
+                scanner.nextLine();
 
                 switch (option) {
                     case 1:
@@ -230,7 +236,7 @@ public class Main {
                 System.out.println("5. Back to Main Menu");
 
                 int option = scanner.nextInt();
-                scanner.nextLine(); // consume newline left-over
+                scanner.nextLine();
 
                 switch (option) {
                     case 1:

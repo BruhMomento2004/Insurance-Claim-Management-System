@@ -2,6 +2,8 @@ package Classes;
 
 /**
  * @author <Nguyen Thanh Tung - s3979489>
+ * Reference: https://github.com/VINAYKUMARKUNDER/Insurance-Management-System.git and
+ * https://youtu.be/xNeOHmqNVus?si=4L5anBRVpkQJviVH
  */
 
 import java.io.*;
@@ -11,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import Enum.Status;
 
@@ -22,7 +23,7 @@ public class LoadSaveData {
         try {
             writer = new BufferedWriter(new FileWriter(fileName, true)); // true to append to existing file
             writer.write(bankInfo.getID() + ", " + bankInfo.getBankName() + ", " + bankInfo.getAccountNumber());
-            writer.newLine(); // to write each object on a new line
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -77,7 +78,7 @@ public class LoadSaveData {
                 writer.write(bankInfo.getID() + ", " +
                         bankInfo.getBankName() + ", " +
                         bankInfo.getAccountNumber());
-                writer.newLine(); // to write each object on a new line
+                writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -106,7 +107,7 @@ public class LoadSaveData {
                     claim.getClaimAmount() + ", " +
                     claim.getStatus() + ", " +
                     claim.getBankingInfo());
-            writer.newLine(); // to write each object on a new line
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -169,7 +170,7 @@ public class LoadSaveData {
                         claim.getClaimAmount() + ", " +
                         claim.getStatus() + ", " +
                         claim.getBankingInfo());
-                writer.newLine(); // to write each object on a new line
+                writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -190,7 +191,7 @@ public class LoadSaveData {
         try {
             writer = new BufferedWriter(new FileWriter(fileName, true)); // true to append to existing file
             writer.write(card.getID() + ", " + card.getCardHolder() + ", " + card.getPolicyOwner() + ", " + sdf.format(card.getExpiryDate()));
-            writer.newLine(); // to write each object on a new line
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -247,7 +248,7 @@ public class LoadSaveData {
                         card.getCardHolder() + ", " +
                         card.getPolicyOwner() + ", " +
                         sdf.format(card.getExpiryDate()));
-                writer.newLine(); // to write each object on a new line
+                writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -271,7 +272,7 @@ public class LoadSaveData {
                     dependent.getCustomerInsuranceCard() + ", " +
                     String.join("_", dependent.getCustomerClaims()) + ", " +
                     dependent.getPolicyHolderId());
-            writer.newLine(); // to write each object on a new line
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -325,7 +326,7 @@ public class LoadSaveData {
                         dependent.getCustomerInsuranceCard() + ", " +
                         String.join("_", dependent.getCustomerClaims()) + ", " +
                         dependent.getPolicyHolderId());
-                writer.newLine(); // to write each object on a new line
+                writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -349,7 +350,7 @@ public class LoadSaveData {
                     policyHolder.getCustomerInsuranceCard() + ", " +
                     String.join("_", policyHolder.getCustomerClaims()) + ", " +
                     String.join("_", policyHolder.getDependents()));
-            writer.newLine(); // to write each object on a new line
+            writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -403,7 +404,7 @@ public class LoadSaveData {
                         policyHolder.getCustomerInsuranceCard() + ", " +
                         String.join("_", policyHolder.getCustomerClaims()) + ", " +
                         String.join("_", policyHolder.getDependents()));
-                writer.newLine(); // to write each object on a new line
+                writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();

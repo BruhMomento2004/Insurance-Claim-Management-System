@@ -2,6 +2,8 @@ package Classes;
 
 /**
  * @author <Nguyen Thanh Tung - s3979489>
+ * Reference: https://github.com/VINAYKUMARKUNDER/Insurance-Management-System.git and
+ * https://youtu.be/xNeOHmqNVus?si=4L5anBRVpkQJviVH
  */
 
 import java.util.*;
@@ -45,7 +47,7 @@ public class PolicyHolder extends Customer{
         while (true) {
             System.out.println("Enter Insurance Card number (10 digits):");
             insuranceCard = scanner.nextLong();
-            scanner.nextLine(); // consume newline left-over
+            scanner.nextLine();
 
             String insuranceCardStr = Long.toString(insuranceCard);
             if (insuranceCardStr.length() == 10) {
@@ -82,7 +84,7 @@ public class PolicyHolder extends Customer{
         // Add the dependents to the list of dependents of the policyholder
         newPolicyHolder.setDependents(dependents);
 
-        // Save the new policyholder to the file
+        // Save the new policyholder to the text file
         LoadSaveData loadSaveData = new LoadSaveData();
         loadSaveData.savePolicyHolder(newPolicyHolder);
 
@@ -96,7 +98,7 @@ public class PolicyHolder extends Customer{
         // Create an instance of LoadSaveData
         LoadSaveData loadSaveData = new LoadSaveData();
 
-        // Load the policyholders from the file
+        // Load the policyholders from the text file
         List<PolicyHolder> policyHolders = loadSaveData.loadPolicyHolder();
 
         // Search for the customer in the list of policyholders
@@ -136,7 +138,7 @@ public class PolicyHolder extends Customer{
                     policyHolder.setDependents(dependents);
                 }
 
-                // Save the updated policyholder back to the file
+                // Save the updated policyholder back to the text file
                 loadSaveData.updatePolicyHolder(policyHolders);
 
                 System.out.println("Customer updated successfully.");
@@ -154,7 +156,7 @@ public class PolicyHolder extends Customer{
         // Create an instance of LoadSaveData
         LoadSaveData loadSaveData = new LoadSaveData();
 
-        // Load the policyholders from the file
+        // Load the policyholders from the text file
         List<PolicyHolder> policyHolders = loadSaveData.loadPolicyHolder();
 
         // Search for the customer in the list of policyholders

@@ -2,6 +2,8 @@ package Classes;
 
 /**
  * @author <Nguyen Thanh Tung - s3979489>
+ * Reference: https://github.com/VINAYKUMARKUNDER/Insurance-Management-System.git and
+ * https://youtu.be/xNeOHmqNVus?si=4L5anBRVpkQJviVH
  */
 
 import Interface.generateID;
@@ -111,7 +113,7 @@ public class InsuranceCard implements generateID {
         // Add the new card to the list of cards
         cards.add(newCard);
 
-        // Save the card to the file
+        // Save the card to the text file
         loadSaveData.saveCard(newCard);
 
         System.out.println("Card created successfully");
@@ -162,7 +164,7 @@ public class InsuranceCard implements generateID {
             }
         }
 
-        // Update the card in the file
+        // Update the card in the text file
         loadSaveData.updateCard(cards);
 
         System.out.println("Card updated successfully.");
@@ -170,7 +172,7 @@ public class InsuranceCard implements generateID {
     public static void readCard(Scanner scanner) {
         System.out.println("Enter the ID of the card you want to read:");
         int id = scanner.nextInt();
-        scanner.nextLine(); // consume newline left-over
+        scanner.nextLine();
 
         // Create an instance of LoadSaveData and load the cards
         LoadSaveData loadSaveData = new LoadSaveData();
@@ -200,9 +202,8 @@ public class InsuranceCard implements generateID {
             return;
         }
 
-        // Iterate over the list of cards
+        // Print the details of each card
         for (InsuranceCard card : cards) {
-            // Print the details of each card
             System.out.println("Card ID: " + card.getID());
             System.out.println("Card Holder: " + card.getCardHolder());
             System.out.println("Policy Owner: " + card.getPolicyOwner());

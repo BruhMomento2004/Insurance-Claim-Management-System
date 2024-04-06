@@ -1,7 +1,9 @@
 package Classes;
 
 /**
- * @author <Nguyen Thanh Tung - s3979489> 
+ * @author <Nguyen Thanh Tung - s3979489>
+ * Reference: https://github.com/VINAYKUMARKUNDER/Insurance-Management-System.git and
+ * https://youtu.be/xNeOHmqNVus?si=4L5anBRVpkQJviVH
  */
 
 import java.text.ParseException;
@@ -146,7 +148,7 @@ public class Claim implements ClaimProcessManager, generateID {
         while (true) {
             System.out.println("Enter Card Number (10 digits):");
             cardNumber = scanner.nextLong();
-            scanner.nextLine(); // consume newline left-over
+            scanner.nextLine();
 
             String cardNumberStr = Long.toString(cardNumber);
             if (cardNumberStr.length() == 10) {
@@ -184,7 +186,7 @@ public class Claim implements ClaimProcessManager, generateID {
         System.out.println("Enter Bank Info (format: b-xxxxxxx - BankName - AccountNumber):");
         String bankingInfo = scanner.nextLine();
 
-        // Regular expression to match the required format
+        // Ask for a specific format
         String regex = "b-\\d{7} - .+ - \\d+(\\.\\d+)?";
 
         while (!bankingInfo.matches(regex)) {
@@ -211,7 +213,7 @@ public class Claim implements ClaimProcessManager, generateID {
         // Create an instance of LoadSaveData
         LoadSaveData loadSaveData = new LoadSaveData();
 
-        // Load the claims from the file
+        // Load the claims from the text file
         List<Claim> claims = loadSaveData.loadClaim();
 
         // Find the claim in the list of claims
@@ -299,7 +301,7 @@ public class Claim implements ClaimProcessManager, generateID {
         // Create an instance of LoadSaveData
         LoadSaveData loadSaveData = new LoadSaveData();
 
-        // Load the claims from the file
+        // Load the claims from the text file
         List<Claim> claims = loadSaveData.loadClaim();
 
         // Find the claim in the list of claims
@@ -309,7 +311,7 @@ public class Claim implements ClaimProcessManager, generateID {
                 // If the claim is found, remove it from the list
                 iterator.remove();
 
-                // Save the updated list of claims back to the file
+                // Save the updated list of claims back to the text file
                 loadSaveData.updateClaims(claims);
 
                 System.out.println("Claim deleted successfully with ID: " + ID);
@@ -365,7 +367,7 @@ public class Claim implements ClaimProcessManager, generateID {
             return;
         }
 
-        // Iterate over the list of claims
+        // Print all the claims
         for (Claim claim : claims) {
             System.out.println(claim.toString());
         }
