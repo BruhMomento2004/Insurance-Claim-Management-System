@@ -34,6 +34,14 @@ public class Dependent extends Customer implements generateID {
         dependents.add(newDependent);
     }
 
+    public List<String> getCustomerClaim() {
+        return customerClaims;
+    }
+
+    public void setCustomerClaims(List<String> customerClaims) {
+        this.customerClaims = customerClaims;
+    }
+
     @Override
     public String IDGenerator() {
         int number = random.nextInt(9_000_000) + 1_000_000;
@@ -69,7 +77,7 @@ public class Dependent extends Customer implements generateID {
             policyHolderId = scanner.nextLine();
         }
 
-        System.out.println("Enter Claims (the IDs of the claims in the correct format, for multiple claim connect them with _ in between the claims IDs):");
+        System.out.println("Enter Claims (f-xxxxxxxxxx_f-xxxxxxxxxx):");
         String claimsStr = scanner.nextLine();
         List<String> claims = Arrays.asList(claimsStr.split(","));
 
@@ -101,41 +109,46 @@ public class Dependent extends Customer implements generateID {
         // Search for the customer in the list of dependents
         for (Dependent dependent : dependents) {
             if (dependent.getId().equals(id)) {
-                System.out.println("Enter new Full Name:");
+                System.out.println("Enter new Full Name (or leave blank to keep the current name):");
                 String fullName = scanner.nextLine();
-
-                System.out.println("Enter new Insurance Card number:");
-                long insuranceCard = scanner.nextLong();
-                scanner.nextLine(); // consume newline left-over
-                String insuranceCardStr = Long.toString(insuranceCard);
-                while (insuranceCardStr.length() != 10) {
-                    System.out.println("Invalid Insurance Card number. It should be exactly 10 digits.");
-                    System.out.println("Enter new Insurance Card number:");
-                    insuranceCard = scanner.nextLong();
-                    scanner.nextLine(); // consume newline left-over
-                    insuranceCardStr = Long.toString(insuranceCard);
+                if (!fullName.isEmpty() && !fullName.equalsIgnoreCase("skip")) {
+                    dependent.setFullName(fullName);
                 }
 
-                System.out.println("Enter new Claims (comma separated):");
+                while (true) {
+                    System.out.println("Enter new Insurance Card number (or leave blank to keep the current number):");
+                    String insuranceCardStr = scanner.nextLine();
+                    if (insuranceCardStr.isEmpty() || insuranceCardStr.equalsIgnoreCase("skip")) {
+                        break;
+                    } else if (insuranceCardStr.length() == 10) {
+                        long insuranceCard = Long.parseLong(insuranceCardStr);
+                        dependent.setInsuranceCard(insuranceCard);
+                        break;
+                    } else {
+                        System.out.println("Invalid Insurance Card number. It should be exactly 10 digits.");
+                    }
+                }
+
+                System.out.println("Enter new Claims (f-xxxxxxxxxx_f-xxxxxxxxxx) (or leave blank to keep the current claims):");
                 String claimsStr = scanner.nextLine();
-                List<String> claims = Arrays.asList(claimsStr.split(","));
-
-                System.out.println("Enter new Policy Holder's ID (c-xxxxxxx):");
-                String policyHolderId = scanner.nextLine();
-
-                // Regular expression for the required ID format
-                String idFormat = "c-\\d{7}";
-
-                while (!policyHolderId.matches(idFormat)) {
-                    System.out.println("Invalid ID format. Please enter the ID in the format 'c-xxxxxxx':");
-                    policyHolderId = scanner.nextLine();
+                if (!claimsStr.isEmpty() && !claimsStr.equalsIgnoreCase("skip")) {
+                    List<String> claims = Arrays.asList(claimsStr.split(","));
+                    dependent.setCustomerClaims(claims);
                 }
 
-                // Update the customer details
-                dependent.setFullName(fullName);
-                dependent.setInsuranceCard(insuranceCard);
-                dependent.setClaims(claims);
-                dependent.setPolicyHolderId(policyHolderId);
+                System.out.println("Enter new Policy Holder's ID (or leave blank to keep the current ID):");
+                String policyHolderId = scanner.nextLine();
+                if (!policyHolderId.isEmpty() && !policyHolderId.equalsIgnoreCase("skip")) {
+                    // Regular expression for the required ID format
+                    String idFormat = "c-\\d{7}";
+
+                    while (!policyHolderId.matches(idFormat)) {
+                        System.out.println("Invalid ID format. Please enter the ID in the format 'c-xxxxxxx':");
+                        policyHolderId = scanner.nextLine();
+                    }
+
+                    dependent.setPolicyHolderId(policyHolderId);
+                }
 
                 // Save the updated dependent back to the file
                 loadSaveData.updateDependent(dependents);
@@ -172,6 +185,16 @@ public class Dependent extends Customer implements generateID {
 
         System.out.println("Dependent with ID: " + id + " not found.");
     }
+    @Override
+    public void readAllCustomers() {
+        LoadSaveData loadSaveData = new LoadSaveData();
+        List<Dependent> dependents = loadSaveData.loadDependent();
+
+        System.out.println("All dependents:");
+        for (Dependent dependent : dependents) {
+            System.out.println(dependent);
+        }
+    }
 
     @Override
     public String getCustomerID() {
@@ -190,7 +213,7 @@ public class Dependent extends Customer implements generateID {
 
     @Override
     public List<String> getCustomerClaims() {
-        return customerClaims != null ? customerClaims : new ArrayList<>();
+        return getCustomerClaim();
     }
 
     @Override

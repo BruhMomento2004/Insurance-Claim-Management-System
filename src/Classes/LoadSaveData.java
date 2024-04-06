@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import Enum.Status;
 
 public class LoadSaveData {
@@ -323,6 +325,84 @@ public class LoadSaveData {
                         dependent.getCustomerInsuranceCard() + ", " +
                         String.join("_", dependent.getCustomerClaims()) + ", " +
                         dependent.getPolicyHolderId());
+                writer.newLine(); // to write each object on a new line
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public void savePolicyHolder(PolicyHolder policyHolder) {
+        String fileName = "src/Data/PolicyHolder.txt";
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(fileName, true)); // true to append to existing file
+            writer.write(policyHolder.getCustomerID() + ", " +
+                    policyHolder.getCustomerFullName() + ", " +
+                    policyHolder.getCustomerInsuranceCard() + ", " +
+                    String.join("_", policyHolder.getCustomerClaims()) + ", " +
+                    String.join("_", policyHolder.getDependents()));
+            writer.newLine(); // to write each object on a new line
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public List<PolicyHolder> loadPolicyHolder() {
+        String fileName = "src/Data/PolicyHolder.txt";
+        List<PolicyHolder> policyHolders = new ArrayList<>();
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(fileName));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(", "); // split the line using the delimiter
+                String customerID = parts[0].trim(); // directly use the first part as customerID
+                String customerFullName = parts[1].trim(); // directly use the second part as customerFullName
+                long customerInsuranceCard = Long.parseLong(parts[2].trim()); // directly use the third part as customerInsuranceCard
+                List<String> customerClaims = Arrays.asList(parts[3].trim().split("_")); // directly use the fourth part as customerClaims
+                List<String> dependents = Arrays.asList(parts[4].trim().split("_")); // directly use the fifth part as dependents
+                PolicyHolder policyHolder = new PolicyHolder(customerID, customerFullName, customerInsuranceCard, customerClaims, dependents);
+                policyHolders.add(policyHolder);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (reader != null) {
+                    reader.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return policyHolders;
+    }
+    public void updatePolicyHolder(List<PolicyHolder> policyHolders) {
+        String fileName = "src/Data/PolicyHolder.txt";
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter(fileName, false)); // false to overwrite the file
+            for (PolicyHolder policyHolder : policyHolders) {
+                writer.write(policyHolder.getCustomerID() + ", " +
+                        policyHolder.getCustomerFullName() + ", " +
+                        policyHolder.getCustomerInsuranceCard() + ", " +
+                        String.join("_", policyHolder.getCustomerClaims()) + ", " +
+                        String.join("_", policyHolder.getDependents()));
                 writer.newLine(); // to write each object on a new line
             }
         } catch (IOException e) {

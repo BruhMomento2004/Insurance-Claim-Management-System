@@ -157,7 +157,8 @@ public class Main {
                 System.out.println("Please select an option:");
                 System.out.println("1. Policy Holder Operations");
                 System.out.println("2. Dependent Operations");
-                System.out.println("3. Exit");
+                System.out.println("3. Back to Main Menu");
+                System.out.println("4. Exit the System");
 
                 int option = scanner.nextInt();
                 scanner.nextLine(); // consume newline left-over
@@ -170,6 +171,8 @@ public class Main {
                         dependentOperations(scanner);
                         break;
                     case 3:
+                        return; // Back to Main Menu
+                    case 4:
                         System.out.println("Exiting the system...");
                         System.exit(0);
                     default:
@@ -187,7 +190,8 @@ public class Main {
                 System.out.println("1. Create Policy Holder");
                 System.out.println("2. Update Policy Holder");
                 System.out.println("3. Read Policy Holder");
-                System.out.println("4. Back to Main Menu");
+                System.out.println("4. Read All Policy Holders");
+                System.out.println("5. Back to Main Menu");
 
                 int option = scanner.nextInt();
                 scanner.nextLine(); // consume newline left-over
@@ -203,6 +207,9 @@ public class Main {
                         policyHolder.readCustomer(scanner);
                         break;
                     case 4:
+                        policyHolder.readAllCustomers();
+                        break;
+                    case 5:
                         return;
                     default:
                         System.out.println("Invalid option. Please try again.");
@@ -219,7 +226,8 @@ public class Main {
                 System.out.println("1. Create Dependent");
                 System.out.println("2. Update Dependent");
                 System.out.println("3. Read Dependent");
-                System.out.println("4. Back to Main Menu");
+                System.out.println("4. Read All Dependents");
+                System.out.println("5. Back to Main Menu");
 
                 int option = scanner.nextInt();
                 scanner.nextLine(); // consume newline left-over
@@ -235,6 +243,9 @@ public class Main {
                         dependent.readCustomer(scanner);
                         break;
                     case 4:
+                        dependent.readAllCustomers();
+                        break;
+                    case 5:
                         return;
                     default:
                         System.out.println("Invalid option. Please try again.");

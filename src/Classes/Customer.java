@@ -57,16 +57,6 @@ public abstract class Customer implements generateID {
         Claims = claims;
     }
 
-    public static void readAllCustomers() {
-        System.out.println("All policy holders");
-        for (PolicyHolder policyHolder : PolicyHolder.getPolicyHolders()) {
-            System.out.println(policyHolder);
-        }
-        System.out.println("All dependents");
-        for (Dependent dependent : Dependent.getDependents()) {
-            System.out.println(dependent);
-        }
-    }
     @Override
     public String IDGenerator() {
         int number = random.nextInt(9_000_000) + 1_000_000;
@@ -76,6 +66,7 @@ public abstract class Customer implements generateID {
     public abstract void createCustomer(Scanner scanner);
     public abstract void updateCustomer(Scanner scanner);
     public abstract void readCustomer(Scanner scanner);
+    public abstract void readAllCustomers();
 
     public abstract String getCustomerID();
 

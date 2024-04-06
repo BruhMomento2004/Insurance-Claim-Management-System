@@ -5,22 +5,23 @@ package Classes;
  */
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class PolicyHolder extends Customer{
-    private List<Dependent> dependents;
+    private List<String> dependents;
     private static List<PolicyHolder> policyHolders = new ArrayList<>();
     private static Random random = new Random();
     public PolicyHolder() {
     }
-    public PolicyHolder(String id, String fullName, int insuranceCard, List<String> claims, List<Dependent> dependents) {
+    public PolicyHolder(String id, String fullName, long insuranceCard, List<String> claims, List<String> dependents) {
         super(id, fullName, insuranceCard, claims);
-        this.dependents = dependents;
+        this.dependents = dependents != null ? dependents : new ArrayList<>();
     }
-    public List<Dependent> getDependents() {
+    public List<String> getDependents() {
         return dependents;
     }
 
-    public void setDependents(List<Dependent> dependents) {
+    public void setDependents(List<String> dependents) {
         this.dependents = dependents;
     }
     public static List<PolicyHolder> getPolicyHolders() {
@@ -40,13 +41,13 @@ public class PolicyHolder extends Customer{
         System.out.println("Enter Full Name:");
         String fullName = scanner.nextLine();
 
-        int insuranceCard;
+        long insuranceCard;
         while (true) {
             System.out.println("Enter Insurance Card number (10 digits):");
-            insuranceCard = scanner.nextInt();
+            insuranceCard = scanner.nextLong();
             scanner.nextLine(); // consume newline left-over
 
-            String insuranceCardStr = Integer.toString(insuranceCard);
+            String insuranceCardStr = Long.toString(insuranceCard);
             if (insuranceCardStr.length() == 10) {
                 break;
             } else {
@@ -54,40 +55,89 @@ public class PolicyHolder extends Customer{
             }
         }
 
+        // Ask for the claims
+        System.out.println("Enter the claims (in the format of f-1234567890_f-9283918294):");
+        String claimsStr = scanner.nextLine();
+        List<String> claims = Arrays.asList(claimsStr.split(","));
+
         // Generate a unique ID for the customer
-        String id = IDGenerator();
+        String id = "c-" + IDGenerator();
 
         // Create a new PolicyHolder object
-        PolicyHolder newPolicyHolder = new PolicyHolder(id, fullName, insuranceCard, new ArrayList<>(), new ArrayList<>());
+        PolicyHolder newPolicyHolder = new PolicyHolder(id, fullName, insuranceCard, claims, new ArrayList<>());
 
         // Add the new policyholder to the list of policyholders
         PolicyHolder.addPolicyHolder(newPolicyHolder);
 
-        System.out.println("Policy Holder created successfully with ID: " + id);
+        // Ask for the dependents
+        System.out.println("Enter the dependents (in the format c-1234782_c-8293721):");
+        String dependentsStr = scanner.nextLine();
+        List<String> dependents = Arrays.asList(dependentsStr.split("_"));
+
+        // Filter out any null values from the list of dependents
+        dependents = dependents.stream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
+        // Add the dependents to the list of dependents of the policyholder
+        newPolicyHolder.setDependents(dependents);
+
+        // Save the new policyholder to the file
+        LoadSaveData loadSaveData = new LoadSaveData();
+        loadSaveData.savePolicyHolder(newPolicyHolder);
+
+        System.out.println("Policy Holder created successfully");
     }
     @Override
     public void updateCustomer(Scanner scanner) {
         System.out.println("Enter the ID of the customer you want to update:");
         String id = scanner.nextLine();
 
+        // Create an instance of LoadSaveData
+        LoadSaveData loadSaveData = new LoadSaveData();
+
+        // Load the policyholders from the file
+        List<PolicyHolder> policyHolders = loadSaveData.loadPolicyHolder();
+
         // Search for the customer in the list of policyholders
         for (PolicyHolder policyHolder : policyHolders) {
             if (policyHolder.getId().equals(id)) {
-                System.out.println("Enter new Full Name:");
+                System.out.println("Enter new Full Name (or leave blank to keep the current name):");
                 String fullName = scanner.nextLine();
+                if (!fullName.isEmpty() && !fullName.equalsIgnoreCase("skip")) {
+                    policyHolder.setFullName(fullName);
+                }
 
-                System.out.println("Enter new Insurance Card number:");
-                int insuranceCard = scanner.nextInt();
-                scanner.nextLine(); // consume newline left-over
+                while (true) {
+                    System.out.println("Enter new Insurance Card number (or leave blank to keep the current number):");
+                    String insuranceCardStr = scanner.nextLine();
+                    if (insuranceCardStr.isEmpty() || insuranceCardStr.equalsIgnoreCase("skip")) {
+                        break;
+                    } else if (insuranceCardStr.length() == 10) {
+                        long insuranceCard = Long.parseLong(insuranceCardStr);
+                        policyHolder.setInsuranceCard(insuranceCard);
+                        break;
+                    } else {
+                        System.out.println("Invalid Insurance Card number. It should be exactly 10 digits.");
+                    }
+                }
 
-                System.out.println("Enter new Claims (comma separated):");
+                System.out.println("Enter new Claims (f-1234567890_f-xxxxxxxxxx) (or leave blank to keep the current claims):");
                 String claimsStr = scanner.nextLine();
-                List<String> claims = Arrays.asList(claimsStr.split(","));
+                if (!claimsStr.isEmpty() && !claimsStr.equalsIgnoreCase("skip")) {
+                    List<String> claims = Arrays.asList(claimsStr.split(","));
+                    policyHolder.setClaims(claims);
+                }
 
-                // Update the customer details
-                policyHolder.setFullName(fullName);
-                policyHolder.setInsuranceCard(insuranceCard);
-                policyHolder.setClaims(claims);
+                System.out.println("Enter new Dependents (c-1234567_c-xxxxxxxx) (or leave blank to keep the current dependents):");
+                String dependentsStr = scanner.nextLine();
+                if (!dependentsStr.isEmpty() && !dependentsStr.equalsIgnoreCase("skip")) {
+                    List<String> dependents = Arrays.asList(dependentsStr.split(","));
+                    policyHolder.setDependents(dependents);
+                }
+
+                // Save the updated policyholder back to the file
+                loadSaveData.updatePolicyHolder(policyHolders);
 
                 System.out.println("Customer updated successfully.");
                 return;
@@ -100,6 +150,12 @@ public class PolicyHolder extends Customer{
     public void readCustomer(Scanner scanner) {
         System.out.println("Enter the ID of the Policy Holder you want to read:");
         String id = scanner.nextLine();
+
+        // Create an instance of LoadSaveData
+        LoadSaveData loadSaveData = new LoadSaveData();
+
+        // Load the policyholders from the file
+        List<PolicyHolder> policyHolders = loadSaveData.loadPolicyHolder();
 
         // Search for the customer in the list of policyholders
         for (PolicyHolder policyHolder : policyHolders) {
@@ -114,6 +170,17 @@ public class PolicyHolder extends Customer{
         }
 
         System.out.println("Customer with ID: " + id + " not found.");
+    }
+
+    @Override
+    public void readAllCustomers() {
+        LoadSaveData loadSaveData = new LoadSaveData();
+        List<PolicyHolder> policyHolders = loadSaveData.loadPolicyHolder();
+
+        System.out.println("All policy holders:");
+        for (PolicyHolder policyHolder : policyHolders) {
+            System.out.println(policyHolder);
+        }
     }
 
     @Override
@@ -133,7 +200,7 @@ public class PolicyHolder extends Customer{
 
     @Override
     public List<String> getCustomerClaims() {
-        return null;
+        return getClaims();
     }
 
     @Override

@@ -164,7 +164,7 @@ public class Claim implements ClaimProcessManager, generateID {
             e.printStackTrace();
         }
 
-        System.out.println("Enter Documents (comma separated):");
+        System.out.println("Enter Documents name:");
         List<String> documents = new ArrayList<>(Arrays.asList(scanner.nextLine().split(",")));
 
         // Format the documents
@@ -253,7 +253,7 @@ public class Claim implements ClaimProcessManager, generateID {
                     }
                 }
 
-                System.out.println("Enter new Documents (comma separated) or type 'skip' to skip:");
+                System.out.println("Enter new Documents name or type 'skip' to skip:");
                 String documentsStr = scanner.nextLine();
                 if (!documentsStr.isEmpty() && !documentsStr.equalsIgnoreCase("skip")) {
                     List<String> documents = new ArrayList<>(Arrays.asList(documentsStr.split(",")));
