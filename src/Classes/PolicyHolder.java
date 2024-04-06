@@ -177,11 +177,26 @@ public class PolicyHolder extends Customer{
     @Override
     public void readAllCustomers() {
         LoadSaveData loadSaveData = new LoadSaveData();
+
+        // Load the policyholders from the file
         List<PolicyHolder> policyHolders = loadSaveData.loadPolicyHolder();
 
-        System.out.println("All policy holders:");
+        // If there are no policyholders, inform the user
+        if (policyHolders.isEmpty()) {
+            System.out.println("No policy holders found.");
+            return;
+        }
+
+        // Sort the policyholders based on their IDs
+        Collections.sort(policyHolders, new Comparator<PolicyHolder>() {
+            @Override
+            public int compare(PolicyHolder p1, PolicyHolder p2) {
+                return p1.getId().compareTo(p2.getId());
+            }
+        });
+
         for (PolicyHolder policyHolder : policyHolders) {
-            System.out.println(policyHolder);
+            System.out.println(policyHolder.toString());
         }
     }
 

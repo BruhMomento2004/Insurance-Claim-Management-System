@@ -8,10 +8,7 @@ package Classes;
 
 import Interface.generateID;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class BankingInfo implements generateID {
     private String ID;
@@ -145,12 +142,19 @@ public class BankingInfo implements generateID {
             return;
         }
 
+        // Sort the banks based on their IDs
+        Collections.sort(banks, new Comparator<BankingInfo>() {
+            @Override
+            public int compare(BankingInfo b1, BankingInfo b2) {
+                return b1.getID().compareTo(b2.getID());
+            }
+        });
+
         // Print each bank's details
         for (BankingInfo bank : banks) {
             System.out.println(bank.toString());
         }
     }
-
 
     @Override
     public String toString() {

@@ -191,11 +191,26 @@ public class Dependent extends Customer implements generateID {
     @Override
     public void readAllCustomers() {
         LoadSaveData loadSaveData = new LoadSaveData();
+
         List<Dependent> dependents = loadSaveData.loadDependent();
 
-        System.out.println("All dependents:");
+        // If there are no dependents, inform the user
+        if (dependents.isEmpty()) {
+            System.out.println("No dependents found.");
+            return;
+        }
+
+        // Sort the dependents based on their IDs
+        Collections.sort(dependents, new Comparator<Dependent>() {
+            @Override
+            public int compare(Dependent d1, Dependent d2) {
+                return d1.getId().compareTo(d2.getId());
+            }
+        });
+
+        // Print all the dependents
         for (Dependent dependent : dependents) {
-            System.out.println(dependent);
+            System.out.println(dependent.toString());
         }
     }
 

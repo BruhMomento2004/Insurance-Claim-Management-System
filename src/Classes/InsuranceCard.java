@@ -214,7 +214,6 @@ public class InsuranceCard implements generateID {
         System.out.println("Card with ID: " + id + " not found.");
     }
     public static void readAllCards() {
-        // Create an instance of LoadSaveData and load the cards
         LoadSaveData loadSaveData = new LoadSaveData();
         List<InsuranceCard> cards = loadSaveData.loadCard();
 
@@ -223,6 +222,14 @@ public class InsuranceCard implements generateID {
             System.out.println("No cards found.");
             return;
         }
+
+        // Sort the cards based on their IDs
+        Collections.sort(cards, new Comparator<InsuranceCard>() {
+            @Override
+            public int compare(InsuranceCard c1, InsuranceCard c2) {
+                return c1.getID().compareTo(c2.getID());
+            }
+        });
 
         // Print the details of each card
         for (InsuranceCard card : cards) {

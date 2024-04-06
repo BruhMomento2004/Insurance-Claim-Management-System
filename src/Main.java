@@ -197,7 +197,7 @@ public class Main {
                 System.out.println("2. Update Policy Holder");
                 System.out.println("3. Read Policy Holder");
                 System.out.println("4. Read All Policy Holders");
-                System.out.println("5. Back to Main Menu");
+                System.out.println("5. Back to Customer Menu");
 
                 int option = scanner.nextInt();
                 scanner.nextLine();
@@ -233,7 +233,7 @@ public class Main {
                 System.out.println("2. Update Dependent");
                 System.out.println("3. Read Dependent");
                 System.out.println("4. Read All Dependents");
-                System.out.println("5. Back to Main Menu");
+                System.out.println("5. Back to Customer Menu");
 
                 int option = scanner.nextInt();
                 scanner.nextLine();

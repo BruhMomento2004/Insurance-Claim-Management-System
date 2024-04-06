@@ -364,7 +364,6 @@ public class Claim implements ClaimProcessManager, generateID {
     }
     @Override
     public void getAllClaims() {
-        // Create an instance of LoadSaveData
         LoadSaveData loadSaveData = new LoadSaveData();
 
         // Load the claims from the file
@@ -376,7 +375,14 @@ public class Claim implements ClaimProcessManager, generateID {
             return;
         }
 
-        // Print all the claims
+        // Sort the claims based on their IDs
+        Collections.sort(claims, new Comparator<Claim>() {
+            @Override
+            public int compare(Claim c1, Claim c2) {
+                return c1.getID().compareTo(c2.getID());
+            }
+        });
+
         for (Claim claim : claims) {
             System.out.println(claim.toString());
         }
