@@ -133,10 +133,10 @@ public class Claim implements ClaimProcessManager, generateID {
     public void addClaim(Scanner scanner) {
         String ID = IDGenerator();
 
-        System.out.println("Enter Claim Date (yyyy-MM-dd):");
-        Date claimDate = null;
+        System.out.println("Enter Exam Date (yyyy-MM-dd):");
+        Date examDate = null;
         try {
-            claimDate = new SimpleDateFormat("yyyy-MM-dd").parse(scanner.nextLine());
+            examDate = new SimpleDateFormat("yyyy-MM-dd").parse(scanner.nextLine());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -158,10 +158,10 @@ public class Claim implements ClaimProcessManager, generateID {
             }
         }
 
-        System.out.println("Enter Exam Date (yyyy-MM-dd):");
-        Date examDate = null;
+        System.out.println("Enter Claim Date (yyyy-MM-dd):");
+        Date claimDate = null;
         try {
-            examDate = new SimpleDateFormat("yyyy-MM-dd").parse(scanner.nextLine());
+            claimDate = new SimpleDateFormat("yyyy-MM-dd").parse(scanner.nextLine());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -183,19 +183,19 @@ public class Claim implements ClaimProcessManager, generateID {
         System.out.println("Enter Status (NEW, PROCESSING, DONE):");
         Status status = Status.valueOf(scanner.nextLine().toUpperCase());
 
-        System.out.println("Enter Bank Info (format: b-xxxxxxx - BankName - AccountNumber):");
-        String bankingInfo = scanner.nextLine();
+        System.out.println("Enter Bank ID (format: b-xxxxxxx):");
+        String bankId = scanner.nextLine();
 
         // Ask for a specific format
-        String regex = "b-\\d{7} - .+ - \\d+(\\.\\d+)?";
+        String regex = "b-\\d{7}";
 
-        while (!bankingInfo.matches(regex)) {
-            System.out.println("Invalid input. Please enter in the format: b-xxxxxxx - BankName - AccountNumber");
-            bankingInfo = scanner.nextLine();
+        while (!bankId.matches(regex)) {
+            System.out.println("Invalid input. Please enter in the format: b-xxxxxxx");
+            bankId = scanner.nextLine();
         }
 
         // Create a new Claim object
-        Claim newClaim = new Claim(ID, claimDate, insuredPerson, cardNumber, examDate, documents, claimAmount, status, bankingInfo);
+        Claim newClaim = new Claim(ID, claimDate, insuredPerson, cardNumber, examDate, documents, claimAmount, status, bankId);
 
         // Add the new claim to the list of claims
         Claim.addClaim(newClaim);
@@ -203,7 +203,7 @@ public class Claim implements ClaimProcessManager, generateID {
         LoadSaveData loadSaveData = new LoadSaveData();
         loadSaveData.saveClaim(newClaim);
 
-        System.out.println("Claim added successfully with ID: " + ID);
+        System.out.println("Claim added successfully");
     }
     @Override
     public void updateClaim(Scanner scanner) {
@@ -220,12 +220,12 @@ public class Claim implements ClaimProcessManager, generateID {
         for (Claim claim : claims) {
             if (claim.getID().equals(ID)) {
                 // If the claim is found, ask for the new details
-                System.out.println("Enter new Claim Date (yyyy-MM-dd) or type 'skip' to skip:");
-                String claimDateStr = scanner.nextLine();
-                if (!claimDateStr.isEmpty() && !claimDateStr.equalsIgnoreCase("skip")) {
+                System.out.println("Enter new Exam Date (yyyy-MM-dd) or type 'skip' to skip:");
+                String examDateStr = scanner.nextLine();
+                if (!examDateStr.isEmpty() && !examDateStr.equalsIgnoreCase("skip")) {
                     try {
-                        Date claimDate = new SimpleDateFormat("yyyy-MM-dd").parse(claimDateStr);
-                        claim.setClaimDate(claimDate);
+                        Date examDate = new SimpleDateFormat("yyyy-MM-dd").parse(examDateStr);
+                        claim.setExamDate(examDate);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -244,12 +244,12 @@ public class Claim implements ClaimProcessManager, generateID {
                     claim.setCardNumber(cardNumber);
                 }
 
-                System.out.println("Enter new Exam Date (yyyy-MM-dd) or type 'skip' to skip:");
-                String examDateStr = scanner.nextLine();
-                if (!examDateStr.isEmpty() && !examDateStr.equalsIgnoreCase("skip")) {
+                System.out.println("Enter new Claim Date (yyyy-MM-dd) or type 'skip' to skip:");
+                String claimDateStr = scanner.nextLine();
+                if (!claimDateStr.isEmpty() && !claimDateStr.equalsIgnoreCase("skip")) {
                     try {
-                        Date examDate = new SimpleDateFormat("yyyy-MM-dd").parse(examDateStr);
-                        claim.setExamDate(examDate);
+                        Date claimDate = new SimpleDateFormat("yyyy-MM-dd").parse(claimDateStr);
+                        claim.setClaimDate(claimDate);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -276,10 +276,19 @@ public class Claim implements ClaimProcessManager, generateID {
                     claim.setStatus(status);
                 }
 
-                System.out.println("Enter Bank Info (format: b-xxxxxxx - BankName - AccountNumber) or type 'skip' to skip:");
-                String bankingInfo = scanner.nextLine();
-                if (!bankingInfo.isEmpty() && !bankingInfo.equalsIgnoreCase("skip")) {
-                    claim.setBankingInfo(bankingInfo);
+                System.out.println("Enter Bank ID (format: b-xxxxxxx):");
+                String bankId = scanner.nextLine();
+
+                // Ask for a specific format
+                String regex = "b-\\d{7}";
+
+                while (!bankId.matches(regex) && !bankId.equalsIgnoreCase("skip") && !bankId.isEmpty()) {
+                    System.out.println("Invalid input. Please enter in the format: b-xxxxxxx or leave it blank to skip");
+                    bankId = scanner.nextLine();
+                }
+
+                if (!bankId.equalsIgnoreCase("skip") && !bankId.isEmpty()) {
+                    claim.setBankingInfo(bankId);
                 }
 
                 // Save the updated claim to the file
@@ -338,10 +347,10 @@ public class Claim implements ClaimProcessManager, generateID {
             if (claim.getID().equals(ID)) {
                 // If the claim is found, print its details
                 System.out.println("Claim ID: " + claim.getID());
-                System.out.println("Claim Date: " + claim.getClaimDate());
+                System.out.println("Exam Date: " + claim.getExamDate());
                 System.out.println("Insured Person: " + claim.getInsuredPerson());
                 System.out.println("Card Number: " + claim.getCardNumber());
-                System.out.println("Exam Date: " + claim.getExamDate());
+                System.out.println("Claim Date: " + claim.getClaimDate());
                 System.out.println("Documents: " + claim.getDocuments());
                 System.out.println("Claim Amount: " + claim.getClaimAmount());
                 System.out.println("Status: " + claim.getStatus());
@@ -376,10 +385,10 @@ public class Claim implements ClaimProcessManager, generateID {
     public String toString() {
         return  '{' +
                 "ID=" + ID +
-                ", ClaimDate=" + ClaimDate +
+                ", ExamDate=" + ExamDate +
                 ", InsuredPerson=" + InsuredPerson +
                 ", CardNumber=" + CardNumber +
-                ", ExamDate=" + ExamDate +
+                ", ClaimDate=" + ClaimDate +
                 ", Documents=" + Documents +
                 ", ClaimAmount=" + ClaimAmount +
                 ", status=" + status +

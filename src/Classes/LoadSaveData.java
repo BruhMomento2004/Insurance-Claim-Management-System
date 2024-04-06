@@ -99,10 +99,10 @@ public class LoadSaveData {
         try {
             writer = new BufferedWriter(new FileWriter(fileName, true)); // true to append to existing file
             writer.write(claim.getID() + ", " +
-                    sdf.format(claim.getClaimDate()) + ", " +
+                    sdf.format(claim.getExamDate()) + ", " +
                     claim.getInsuredPerson() + ", " +
                     claim.getCardNumber() + ", " +
-                    sdf.format(claim.getExamDate()) + ", " +
+                    sdf.format(claim.getClaimDate()) + ", " +
                     String.join(", ", claim.getDocuments()) + ", " +
                     claim.getClaimAmount() + ", " +
                     claim.getStatus() + ", " +
@@ -130,15 +130,15 @@ public class LoadSaveData {
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(", "); // split the line using the delimiter
                 String ID = parts[0].trim();
-                Date claimDate = new SimpleDateFormat("yyyy-MM-dd").parse(parts[1].trim());
+                Date examDate = new SimpleDateFormat("yyyy-MM-dd").parse(parts[1].trim());
                 String insuredPerson = parts[2].trim();
                 long cardNumber = Long.parseLong(parts[3].trim());
-                Date examDate = new SimpleDateFormat("yyyy-MM-dd").parse(parts[4].trim());
+                Date claimDate = new SimpleDateFormat("yyyy-MM-dd").parse(parts[4].trim());
                 List<String> documents = Arrays.asList(parts[5].trim().split(", "));
                 double claimAmount = Double.parseDouble(parts[6].trim());
                 Status status = Status.valueOf(parts[7].trim());
                 String bankingInfo = parts[8].trim();
-                Claim claim = new Claim(ID, claimDate, insuredPerson, cardNumber, examDate, documents, claimAmount, status, bankingInfo);
+                Claim claim = new Claim(ID, examDate, insuredPerson, cardNumber, claimDate, documents, claimAmount, status, bankingInfo);
                 claims.add(claim);
             }
         } catch (IOException | ParseException e) {
@@ -162,10 +162,10 @@ public class LoadSaveData {
             writer = new BufferedWriter(new FileWriter(fileName, false)); // false to overwrite the file
             for (Claim claim : claims) {
                 writer.write(claim.getID() + ", " +
-                        sdf.format(claim.getClaimDate()) + ", " +
+                        sdf.format(claim.getExamDate()) + ", " +
                         claim.getInsuredPerson() + ", " +
                         claim.getCardNumber() + ", " +
-                        sdf.format(claim.getExamDate()) + ", " +
+                        sdf.format(claim.getClaimDate()) + ", " +
                         String.join(", ", claim.getDocuments()) + ", " +
                         claim.getClaimAmount() + ", " +
                         claim.getStatus() + ", " +
