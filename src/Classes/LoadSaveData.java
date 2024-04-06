@@ -190,7 +190,7 @@ public class LoadSaveData {
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(fileName, true)); // true to append to existing file
-            writer.write(card.getID() + ", " + card.getCardHolder() + ", " + card.getPolicyOwner() + ", " + sdf.format(card.getExpiryDate()));
+            writer.write(card.getID() + ", c-" + card.getCardHolder() + ", c-" + card.getPolicyOwner() + ", " + sdf.format(card.getExpiryDate()));
             writer.newLine();
         } catch (IOException e) {
             e.printStackTrace();
@@ -218,8 +218,8 @@ public class LoadSaveData {
                     continue;
                 }
                 String id = parts[0].trim(); // directly use the first part as ID
-                String cardHolder = parts[1].trim(); // directly use the second part as cardHolder
-                String policyOwner = parts[2].trim(); // directly use the third part as policyOwner
+                String cardHolder = parts[1].substring(2).trim(); // remove the 'c-' prefix and use the second part as cardHolder
+                String policyOwner = parts[2].substring(2).trim(); // remove the 'c-' prefix and use the third part as policyOwner
                 Date expiryDate = new SimpleDateFormat("yyyy-MM-dd").parse(parts[3].trim()); // directly use the fourth part as expiryDate
                 InsuranceCard card = new InsuranceCard(id, cardHolder, policyOwner, expiryDate);
                 cards.add(card);
@@ -244,8 +244,8 @@ public class LoadSaveData {
         try {
             writer = new BufferedWriter(new FileWriter(fileName, false)); // false to overwrite the file
             for (InsuranceCard card : cards) {
-                writer.write(card.getID() + ", " +
-                        card.getCardHolder() + ", " +
+                writer.write(card.getID() + ", c-" +
+                        card.getCardHolder() + ", c-" +
                         card.getPolicyOwner() + ", " +
                         sdf.format(card.getExpiryDate()));
                 writer.newLine();

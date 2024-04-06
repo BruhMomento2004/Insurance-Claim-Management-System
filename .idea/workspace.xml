@@ -4,19 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a59f07c4-c277-4573-abd2-8ea79995e338" name="Changes" comment="create the methods for the PolicyHolder class, fix the non-function of claims ID mentioned in the last push, and create a readAllCustomers method as well as the data for the PolicyHolders.">
+    <list default="true" id="a59f07c4-c277-4573-abd2-8ea79995e338" name="Changes" comment="very minor fixes to the BankingInfo class, adding in the reference codes in the comment">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/BankingInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/BankingInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Claim.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Claim.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Customer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Customer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/Dependent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/Dependent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/InsuranceCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/InsuranceCard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Classes/LoadSaveData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/LoadSaveData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Classes/PolicyHolder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Classes/PolicyHolder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enum/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enum/Status.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interface/ClaimProcessManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interface/ClaimProcessManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Interface/generateID.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Interface/generateID.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Data/Claims.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data/Claims.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Data/Dependent.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data/Dependent.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Data/InsuranceCard.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/Data/InsuranceCard.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +96,9 @@
       <workItem from="1712362654228" duration="92000" />
       <workItem from="1712362757159" duration="15000" />
       <workItem from="1712362830697" duration="6601000" />
-      <workItem from="1712369563427" duration="1790000" />
+      <workItem from="1712369563427" duration="1859000" />
+      <workItem from="1712416141918" duration="1378000" />
+      <workItem from="1712418308081" duration="711000" />
     </task>
     <task id="LOCAL-00001" summary="The customer, dependent and policyholder class alongside an interface for the Unique ID generator">
       <option name="closed" value="true" />
@@ -232,7 +228,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712369506849</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="very minor fixes to the BankingInfo class, adding in the reference codes in the comment">
+      <option name="closed" value="true" />
+      <created>1712371750134</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1712371750134</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -255,7 +259,8 @@
     <MESSAGE value="The text file for the three class InsuranceCard, BankingInfo and Claims" />
     <MESSAGE value="update regarding the functions for the Dependent class, adding a skipper for the previously created methods and add in the Dependent text file (error with changing the ID claims currently)" />
     <MESSAGE value="create the methods for the PolicyHolder class, fix the non-function of claims ID mentioned in the last push, and create a readAllCustomers method as well as the data for the PolicyHolders." />
-    <option name="LAST_COMMIT_MESSAGE" value="create the methods for the PolicyHolder class, fix the non-function of claims ID mentioned in the last push, and create a readAllCustomers method as well as the data for the PolicyHolders." />
+    <MESSAGE value="very minor fixes to the BankingInfo class, adding in the reference codes in the comment" />
+    <option name="LAST_COMMIT_MESSAGE" value="very minor fixes to the BankingInfo class, adding in the reference codes in the comment" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

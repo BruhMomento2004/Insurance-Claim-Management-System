@@ -79,8 +79,16 @@ public class InsuranceCard implements generateID {
         // Use the IDGenerator method of the new object
         String ID = card.IDGenerator();
 
-        System.out.println("Enter Card Holder's name:");
+        System.out.println("Enter Card Holder's ID (7 digits):");
         String cardHolder = scanner.nextLine();
+
+        // Enforce the data format
+        String idFormat = "\\d{7}";
+
+        while (!cardHolder.matches(idFormat)) {
+            System.out.println("Invalid ID format. Please enter the the 7 digits for the ID:");
+            cardHolder = scanner.nextLine();
+        }
 
         // Create an instance of LoadSaveData and load the cards
         LoadSaveData loadSaveData = new LoadSaveData();
@@ -94,8 +102,13 @@ public class InsuranceCard implements generateID {
             }
         }
 
-        System.out.println("Enter Policy Owner's name:");
+        System.out.println("Enter Policy Owner's ID (7 digits):");
         String policyOwner = scanner.nextLine();
+
+        while (!policyOwner.matches(idFormat)) {
+            System.out.println("Invalid ID format. Please enter the the 7 digits for the ID:");
+            policyOwner = scanner.nextLine();
+        }
 
         System.out.println("Enter Expiry Date (in format yyyy-mm-dd):");
         String expiryDateStr = scanner.nextLine();
@@ -139,16 +152,26 @@ public class InsuranceCard implements generateID {
             return;
         }
 
-        System.out.println("Enter new Card Holder's name (or type 'skip' to skip):");
+        System.out.println("Enter new Card Holder's ID (7 digits) (or type 'skip' to skip):");
         String cardHolder = scanner.nextLine();
-        if (!cardHolder.isEmpty() && !cardHolder.equalsIgnoreCase("skip")) {
-            cardToUpdate.setCardHolder(cardHolder);
+        // Enforce the data format
+        String idFormat = "\\d{7}";
+        while (!cardHolder.matches(idFormat) && !cardHolder.equalsIgnoreCase("skip")) {
+            System.out.println("Invalid ID format. Please enter the 7 digits for the ID:");
+            cardHolder = scanner.nextLine();
+        }
+        if (!cardHolder.equalsIgnoreCase("skip")) {
+            cardToUpdate.setCardHolder(cardHolder.substring(2));
         }
 
-        System.out.println("Enter new Policy Owner's name (or type 'skip' to skip):");
+        System.out.println("Enter new Policy Owner's ID (7 digits) (or type 'skip' to skip):");
         String policyOwner = scanner.nextLine();
-        if (!policyOwner.isEmpty() && !policyOwner.equalsIgnoreCase("skip")) {
-            cardToUpdate.setPolicyOwner(policyOwner);
+        while (!policyOwner.matches(idFormat) && !policyOwner.equalsIgnoreCase("skip")) {
+            System.out.println("Invalid ID format. Please enter the the 7 digits for the ID':");
+            policyOwner = scanner.nextLine();
+        }
+        if (!policyOwner.equalsIgnoreCase("skip")) {
+            cardToUpdate.setPolicyOwner(policyOwner.substring(2));
         }
 
         System.out.println("Enter new Expiry Date (in format yyyy-mm-dd) (or type 'skip' to skip):");
@@ -171,19 +194,18 @@ public class InsuranceCard implements generateID {
     }
     public static void readCard(Scanner scanner) {
         System.out.println("Enter the ID of the card you want to read:");
-        int id = scanner.nextInt();
-        scanner.nextLine();
+        String id = scanner.nextLine();
 
         // Create an instance of LoadSaveData and load the cards
         LoadSaveData loadSaveData = new LoadSaveData();
         List<InsuranceCard> cards = loadSaveData.loadCard();
 
         for (InsuranceCard card : cards) {
-            if (card.getID().equals(String.valueOf(id))) {
+            if (card.getID().equals(id)) {
                 // Print the details of the card
                 System.out.println("Card ID: " + card.getID());
-                System.out.println("Card Holder: " + card.getCardHolder());
-                System.out.println("Policy Owner: " + card.getPolicyOwner());
+                System.out.println("Card Holder: c-" + card.getCardHolder());
+                System.out.println("Policy Owner: c-" + card.getPolicyOwner());
                 System.out.println("Expiry Date: " + card.getExpiryDate());
                 return;
             }
@@ -205,8 +227,8 @@ public class InsuranceCard implements generateID {
         // Print the details of each card
         for (InsuranceCard card : cards) {
             System.out.println("Card ID: " + card.getID());
-            System.out.println("Card Holder: " + card.getCardHolder());
-            System.out.println("Policy Owner: " + card.getPolicyOwner());
+            System.out.println("Card Holder: c-" + card.getCardHolder());
+            System.out.println("Policy Owner: c-" + card.getPolicyOwner());
             System.out.println("Expiry Date: " + card.getExpiryDate());
             System.out.println("------------------------");
         }
